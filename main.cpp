@@ -6,13 +6,13 @@
 //  Copyright 2008. All rights reserved.
 //
 
-#define MAC	false
+#define MAC	true
 
 #define TTF	true
 
 #define HSON	true
 
-#define NI	420 //nombre d'images du jeu (nombre d'objets)
+#define NI	420 //number of images in the game (number of objects)
 
 #define EDIT	false
 
@@ -21,18 +21,18 @@
 #include <unistd.h>
 
 #if MAC
-const char *RESOURCES = "S.C.Out.app/Contents/Resources/"; //endroit où sont les ressources
-const char *DSONS = ""; //dossier dans lequel sont les sons
-const char *TAB = "Tableaux/"; //dossier dans lequel sont enregistré les tableaux
+const char *RESOURCES = "S.C.Out.app/Contents/Resources/"; //resource folder in Mac apps
+const char *DSONS = ""; //sounds folder
+const char *TAB = "Tableaux/"; //tables folder
 #import <Cocoa/Cocoa.h>
 #import <SDL/SDL.h>
 #if TTF
 #import <SDL_ttf/SDL_ttf.h>
 #endif
 #else
-const char *RESOURCES = ""; //endroit où sont les ressources
-const char *DSONS = "Sons/"; //dossier dans lequel sont les sons
-const char *TAB = "Tableaux/"; //dossier dans lequel sont enregistré les tableaux
+const char *RESOURCES = ""; //resource folder
+const char *DSONS = "Sons/"; //sounds folder
+const char *TAB = "Tableaux/"; //tables folder
 #include <SDL/SDL.h>
 #if TTF
 #include <SDL/SDL_ttf.h>
@@ -49,51 +49,51 @@ const char *TAB = "Tableaux/"; //dossier dans lequel sont enregistré les tableau
 bool ROUGE = true;
 
 #if FINAL && !EDIT
-#define SCREENX 512 //1280 //640 //dimensions de la fenetre
+#define SCREENX 512 //1280 //640 //window dimensions
 #define SCREENY	380 //800 //480
 
-#define NX	10 //40 //10 //10 //nombres de cases visibles
+#define NX	10 //40 //10 //10 //number of visible boxes
 #define NY	8 //24 //8 //8
 #else
-#define SCREENX 1280 //640 //dimensions de la fenetre
+#define SCREENX 1280 //640 //window dimensions
 #define SCREENY	800 //480
 
-#define NX	40 //10 //10 //nombres de cases visibles
+#define NX	40 //10 //10 //number of visible boxes
 #define NY	24 //8 //8
 #endif
 
-#define CX	32 //dimensions d'une case (en pixels)
+#define CX	32 //box size in pixels
 #define CY	25
 
 #import "edit.h"
 
-#define DHEAR	10 //distance a partir de laquelle on entend plus (en cases)
+#define DHEAR	10 //sound distance in boxes
 #define DHEAR2	(DHEAR*DHEAR)
 
-#define TANIM	30 //temps minimal entre deux image d'une animation (en millisecondes)
+#define TANIM	30 //minimum time between two frame animations (in milliseconds)
 
 #if FINAL
-#define TVUE	20 //temps entre deux deplacements de la vue
-#define NVUE	10 //nombre d'image d'un deplacement du champ de vision
-#define NMUS0	5	//nombre d'images d'un deplacement de nous
-Uint32 NMUS	 = NMUS0;	//nombre d'image d'un deplacement du champ de vision
-#define TMUS	30	//temps entre deux images d'un deplacement de nous
+#define TVUE	20 //time between displacements of sight?? (temps entre deux deplacements de la vue)
+#define NVUE	10 //field of view picture number?? (nombre d'image d'un deplacement du champ de vision)
+#define NMUS0	5	//number of images of a displacement?? (nombre d'images d'un deplacement de nous)
+Uint32 NMUS	 = NMUS0;	//field of view picture number?? (nombre d'image d'un deplacement du champ de vision)
+#define TMUS	30	//time between two images of displacement?? (temps entre deux images d'un deplacement de nous)
 #else
-#define TVUE	5 //temps entre deux deplacements de la vue
-#define NVUE	24 //nombre d'image d'un deplacement du champ de vision
-#define NMUS0	5	//nombre d'images d'un deplacement de nous
-Uint32 NMUS	 = NMUS0;	//nombre d'image d'un deplacement du champ de vision
-#define TMUS	20	//temps entre deux images d'un deplacement de nous
+#define TVUE	5 //time between displacement of sight (temps entre deux deplacements de la vue)
+#define NVUE	24 //field of view picture number?? (nombre d'image d'un deplacement du champ de vision)
+#define NMUS0	5	//number of images of a displacement?? (nombre d'images d'un deplacement de nous)
+Uint32 NMUS	 = NMUS0;	//field of view picture number?? (nombre d'image d'un deplacement du champ de vision)
+#define TMUS	20	//time between two images of displacement?? (temps entre deux images d'un deplacement de nous)
 #endif
-#define tNMUS0	10 //temps restant avant fin de l'acceleration (en nombre de cases)
-Uint32 tNMUS = 0; //temps restant avant fin de l'acceleration
+#define tNMUS0	10 //remaining before the end of the acceleration (in many cases) time?? (temps restant avant fin de l'acceleration (en nombre de cases))
+Uint32 tNMUS = 0; //time remaining before the end of the acceleration (temps restant avant fin de l'acceleration)
 
-#define NBMAX	1000 //nombre de balles maximum
-#define TBALLS	20	//temps entre deux images pour les balles
-#define VBALL	3	//deplacement a chaque fois (en nombre de pixel)
-#define TTAPIS_ROULANT	2 //temps entre deux images
+#define NBMAX	1000 //maximum number of balls
+#define TBALLS	20	//time between two images for bullets
+#define VBALL	3	//displacement every time (number of pixels) - movement?
+#define TTAPIS_ROULANT	2 //time between two images? (temps entre deux images)
 
-#define INVINCIBLE	300 //temps d'invincibilite
+#define INVINCIBLE	300 //invincible time (temps d'invincibilite)
 
 Uint8 GetSens (int dx, int dy);
 Uint8 GetSens2 (int dx, int dy);
@@ -101,16 +101,16 @@ char inline deplx (Uint8 sens);
 char inline deply (Uint8 sens);
 Sint8 signe (Sint8 n);
 void pause (Uint32 t);
-Pos GetRailSens (Uint16 c, Uint8 sens); //donne le sens vers lequel va le rail en fonction du sens d'entree
-Pos GetRailSens (Uint16 c); //donne le sens vers lequel va le rail
+Pos GetRailSens (Uint16 c, Uint8 sens); //gives meaning to the rail which is depending on the direction of entry (donne le sens vers lequel va le rail en fonction du sens d'entree)
+Pos GetRailSens (Uint16 c); //gives meaning to which the rail will?? (donne le sens vers lequel va le rail)
 
 struct Ball
 {
 	Uint16 x,y;	//position
-	Sint8	vx,vy; //vitesse
+	Sint8	vx,vy; //speed
 	//SDL_Surface s;
-	bool used; //la balle est-elle active ?
-	Uint8 react; //la balle a deja reagit avec a case ? //0 = non, 1 = entre dans la case, 2 = milieu de la case
+	bool used; //is ball active
+	Uint8 react; //did the ball react with a box? // 0 = no, 1 = between in box, 2 = middle of the box (la balle a deja reagit avec a case ?) //0 = non, 1 = entre dans la case, 2 = milieu de la case
 	
 	void init ();
 };
@@ -160,55 +160,55 @@ enum
 	tsuicide = 7
 };
 
-struct Jeu
+struct Jeu //Jeu == Game
 {
-	Sons s; //gestion du son
-	Tab t; //le tableau courant
-	Pos pr; //notre position en pixels, relativement a la case
-	Regles r[NI]; //regles de chaque objet
-	Anim a[NA]; //liste des animations
-	Ball b[NBMAX]; //liste des balles
-	SDL_Surface *ecran; //ecran
-	SDL_Surface *im; //images du jeu
-	SDL_Surface *jeu; //image du tableau complet
-	SDL_Surface *ic; //image d'une case
-	Well w[3]; //utilise par l'editeur pour ameliorer
+	Sons s; //sound management
+	Tab t; //current table (table = level?)
+	Pos pr; //our position in pixels, relative to the case (case == frame?)
+	Regles r[NI]; //rules of each object
+	Anim a[NA]; //list of events
+	Ball b[NBMAX]; //list of bullets
+	SDL_Surface *ecran; //screen
+	SDL_Surface *im; //game images
+	SDL_Surface *jeu; //image of full level??
+	SDL_Surface *ic; //image of frame??
+	Well w[3]; //used by the editor to improve?? (utilise par l'editeur pour ameliorer)
 #if TTF
 	TTF_Font *police;
 #endif
-	SDLKey key[NTOUCHES]; //liste des touches de control
-	SDL_Rect vue; //zone de l'image vue
-	SDL_Rect pvue; //position de la vue à l'ecran
+	SDLKey key[NTOUCHES]; //list of control keys
+	SDL_Rect vue; //image area
+	SDL_Rect pvue; //view position on screen?
 	bool quit;
 	bool quitanim;
-	Uint8 win; //on a gagné ?
-	bool moveus; //on doit avancer ?
-	bool canmove; //on peut changer de sens
-	Uint16 invincible; //temps d'invincibilite restant
+	Uint8 win; //was gained?? (on a gagné ?)
+	bool moveus; //we must move forward?
+	bool canmove; //can change direction
+	Uint16 invincible; //remaining invincible time
 	Uint16 vposx;
 	Uint16 vposy;
 	
-	bool dovuerun;	//utilisé par DoVue
-	bool updatevue; //utilisé par DoVue
+	bool dovuerun;	//used by DoVue
+	bool updatevue; //used by DoVue
 	bool paused;
 	
 	void init ();
 	void end ();
-	void Play (Uint32 niveau); //lance le jeu dans le tableau courant (l'argument ne sert que pour la triche)
+	void Play (Uint32 niveau); //start the game in the current level (the argument is only used for cheating)
 	//
-	void Draw (); //redessine tout
-	inline void DrawSol (Uint16 x, Uint16 y); //dessine le sol de la case (x,y)
-	inline void Draw (Uint16 x, Uint16 y); //redessine la case (x,y)
+	void Draw (); //redraw all
+	inline void DrawSol (Uint16 x, Uint16 y); //draws the floor of box x,y
+	inline void Draw (Uint16 x, Uint16 y); //redraws the box x,y
 	inline void DrawUs ();
 	void DrawBall (Uint16 x, Uint16 y);
 	void MoveUs (Uint8 sens);
-	void Update (); //redessine la zone visible à l'ecran
-	void Anime (Uint16 x, Uint16 y, Uint16 n); //lance l'animation n en (x,y)
-	void DoBall (Uint16 x, Uint16 y); //action d'une balle ou explosion en (x,y)
-	void DoExplosif (Uint16 x, Uint16 y); //demarre un explosif situe en (x,y)
-	void DoGrenade (Uint16 x, Uint16 y); //demarre une grenade situe en (x,y)
-	void DoPorte (Uint16 x, Uint16 y); //demarre un objet reagissant quand on passe a cote
-	void UpdateVue (Uint16 x, Uint16 y); //met à jour le champ de vue
+	void Update (); //redraw visible area
+	void Anime (Uint16 x, Uint16 y, Uint16 n); //lance animation?? (lance l'animation n en (x,y))
+	void DoBall (Uint16 x, Uint16 y); //action of a bullet explosion x,y
+	void DoExplosif (Uint16 x, Uint16 y); //start explosive at x,y
+	void DoGrenade (Uint16 x, Uint16 y); //start grenade x,y
+	void DoPorte (Uint16 x, Uint16 y); //start an object that react when we pass by (demarre un objet reagissant quand on passe a cote)
+	void UpdateVue (Uint16 x, Uint16 y); //day makes the field of view?? (met à jour le champ de vue)
 	void Perdu ();
 	void ReactOn (Uint16 x, Uint16 y);
 	void OpenPortes ();
@@ -216,12 +216,12 @@ struct Jeu
 	void OpenBarriere ();
 	void CloseBarriere ();
 	void InitBalls ();
-	void Balle(Uint16 x,Uint16  y,int dx,int dy); //lance une balle depuis (x,y), dans la direction (dx,dy)
-	//void Balle2(Uint16 x,Uint16  y,int dx,int dy); //lance une balle depuis (x,y), dans la direction (dx,dy), en partant du centre
-	void StartVue (); //place le champ de vision où il faut
-	Pos GoodVue (); //là ou devrait être le champ de vision !
-	void ActiveRail (Uint16 x, Uint16 y); //active un rail
-	void DesactiveRail (Uint16 x, Uint16 y); //desactive un rail
+	void Balle(Uint16 x,Uint16  y,int dx,int dy); //shoot bullet from x,y in direction dx,dy
+	//void Balle2(Uint16 x,Uint16  y,int dx,int dy); //shoot bullet from x,y in direction dx,dy from center??
+	void StartVue (); //instead the field of view or must?? (place le champ de vision où il faut)
+	Pos GoodVue (); //should be the field of view?? (là ou devrait être le champ de vision !)
+	void ActiveRail (Uint16 x, Uint16 y); //activates a rail (rail == ??)
+	void DesactiveRail (Uint16 x, Uint16 y); //disables a rail
 	void Teleporte (Uint16 w);
 	void DoOrdi (Uint16 w);
 	void DoPastille (Uint16 x, Uint16 y, Uint16 w);
@@ -231,31 +231,31 @@ struct Jeu
 	void PutRed (Uint8 red);
 	void Main (); //page de depart
 	int EntreCode ();
-	void EditKeys (); //permet a l'utilisateur de modifier les touches de control
-	void EditSon (); //permet a l'utilisateur de regler le son
-	void EditGraph (); //permet a l'utilisateur de regler les graphismes
-	void EditParams (); //permet a l'utilisateur de regler les parametres du jeu
-	void ChooseTab (Uint16 *niveau); //permet à l'utilisateur de selectionner un tableau facilement
-	void SavePrefs (); //enregistre les preferences
-	void LoadPrefs (); //charge les preferences
-	void DispInfo (Uint16 niveau); //affiche des infos (niveau + code)
-	void Recadre (); //remet les choses en place
-	void Pause (); //appelé par le thread principal si pause
-	void DoPause (); //appelé par un thread si pause
+	void EditKeys (); //control settings
+	void EditSon (); //sound setting
+	void EditGraph (); //graphic settings
+	void EditParams (); //game settings
+	void ChooseTab (Uint16 *niveau); //level select
+	void SavePrefs (); 
+	void LoadPrefs (); 
+	void DispInfo (Uint16 niveau); //display information (level + code)
+	void Recadre (); //puts things in place
+	void Pause (); //
+	void DoPause (); //thread break??
  	//Train
-	void initRail (Uint16 x, Uint16 y, Uint16 t, Uint8 sens); //initialise le rail en (x,y) et les suivants
-	void initTrain (); //initialise les rails automatiques
-	void DesactiveRails (); //desactive tous les rails
-	Uint16 ActiveRail (Uint16 rail); //active un rail
-	Uint16 DesactiveRail (Uint16 rail); //desactive un rail
+	void initRail (Uint16 x, Uint16 y, Uint16 t, Uint8 sens); //initializes the rail (x, y) and the following (initialise le rail en (x,y) et les suivants)
+	void initTrain (); //initializes automatic rails
+	void DesactiveRails (); //disable all rails
+	Uint16 ActiveRail (Uint16 rail); //activates a rail
+	Uint16 DesactiveRail (Uint16 rail); //disables a rail
 	//
-	void Load (Uint16 n); //charge le tableau n
-	void Save (Uint16 n); //enregistre le tableau n
-	void Update_tsens (); //met à jour tsens
+	void Load (Uint16 n); //load level
+	void Save (Uint16 n); //save
+	void Update_tsens (); //??? (met à jour tsens)
 	//
 	void Edit (Uint32 niveau);
-	//void LoadTab (Uint32 n); //charge un tableau cree par l'utilisateur
-	//void SaveTab (Uint32 n); //enregistre un tableau cree par l'utilisateur
+	//void LoadTab (Uint32 n); //load user level
+	//void SaveTab (Uint32 n); //save user level
 	Uint16 WellTruc (Uint16 x, Uint16 y, Uint32 truc, Uint32 wtruc);
 	void PutWellTruc (Uint16 x, Uint16 y, Uint32 truc, Uint32 wtruc);
 	void PutWell (Uint16 x, Uint16 y, Uint16 what);
@@ -272,7 +272,7 @@ void Well::init (Uint8 which)
 {
 	switch (which)
 	{
-		case wmur: //murs
+		case wmur: //walls
 			t[0] = 28;
 			t[wgauche] = 27;
 			t[wdroite] = 16;
