@@ -181,7 +181,7 @@ struct Jeu //Jeu == Game
 	SDL_Rect pvue; //view position on screen?
 	bool quit;
 	bool quitanim;
-	Uint8 win; //was gained?? (on a gagnŽ ?)
+	Uint8 win; //was gained?? (on a gagnÃ© ?)
 	bool moveus; //we must move forward?
 	bool canmove; //can change direction
 	Uint16 invincible; //remaining invincible time
@@ -208,7 +208,7 @@ struct Jeu //Jeu == Game
 	void DoExplosif (Uint16 x, Uint16 y); //start explosive at x,y
 	void DoGrenade (Uint16 x, Uint16 y); //start grenade x,y
 	void DoPorte (Uint16 x, Uint16 y); //start an object that react when we pass by (demarre un objet reagissant quand on passe a cote)
-	void UpdateVue (Uint16 x, Uint16 y); //day makes the field of view?? (met ˆ jour le champ de vue)
+	void UpdateVue (Uint16 x, Uint16 y); //day makes the field of view?? (met Ã  jour le champ de vue)
 	void Perdu ();
 	void ReactOn (Uint16 x, Uint16 y);
 	void OpenPortes ();
@@ -218,8 +218,8 @@ struct Jeu //Jeu == Game
 	void InitBalls ();
 	void Balle(Uint16 x,Uint16  y,int dx,int dy); //shoot bullet from x,y in direction dx,dy
 	//void Balle2(Uint16 x,Uint16  y,int dx,int dy); //shoot bullet from x,y in direction dx,dy from center??
-	void StartVue (); //instead the field of view or must?? (place le champ de vision o il faut)
-	Pos GoodVue (); //should be the field of view?? (lˆ ou devrait tre le champ de vision !)
+	void StartVue (); //instead the field of view or must?? (place le champ de vision oÃ¹ il faut)
+	Pos GoodVue (); //should be the field of view?? (lÃ  ou devrait Ãªtre le champ de vision !)
 	void ActiveRail (Uint16 x, Uint16 y); //activates a rail (rail == ??)
 	void DesactiveRail (Uint16 x, Uint16 y); //disables a rail
 	void Teleporte (Uint16 w);
@@ -251,7 +251,7 @@ struct Jeu //Jeu == Game
 	//
 	void Load (Uint16 n); //load level
 	void Save (Uint16 n); //save
-	void Update_tsens (); //??? (met ˆ jour tsens)
+	void Update_tsens (); //??? (met Ã  jour tsens)
 	//
 	void Edit (Uint32 niveau);
 	//void LoadTab (Uint32 n); //load user level
@@ -290,7 +290,7 @@ void Well::init (Uint8 which)
 			t[whaut+wbas+wdroite] = 74;
 			t[whaut+wbas+wdroite+wgauche] = 15;
 			break;
-		case wplante: //plantes
+		case wplante: //plants
 			t[0] = 68;
 			t[wgauche] = 76;
 			t[wdroite] = 77;
@@ -308,7 +308,7 @@ void Well::init (Uint8 which)
 			t[whaut+wbas+wdroite] = 67;
 			t[whaut+wbas+wdroite+wgauche] = 69;
 			break;
-		case wfleche: //fleches
+		case wfleche: //arrows
 			t[0] = 0;
 			t[wgauche] = 0;
 			t[wdroite] = 0;
@@ -350,7 +350,7 @@ void Jeu::SavePrefs ()
 		fclose(f);
 	}else
 	{
-		fprintf(stderr, "Erreur : impossible d'ouvrir (ou de creer) le fichier de preferences !\n");
+		fprintf(stderr, "Error: Unable to open (or create) the preferences file!\n");
 	}
 }
 
@@ -369,7 +369,7 @@ void Jeu::LoadPrefs ()
 		fclose(f);
 	}else
 	{
-		//fprintf(stderr, "Erreur : impossible d'ouvrir le fichier de preferences !\n");
+		//fprintf(stderr, "Error: Unable to open the preferences file!\n");
 	}
 }
 
@@ -480,7 +480,7 @@ int GetNiveau (const char *txt)
 			//printf("k = %d ",k);
 			if (!ptr)
 				continue;
-			ptr = pass(ptr); //passe les espaces
+			ptr = pass(ptr); //forgot spaces ?? (passe les espaces)
 			//printf(ptr);
 			//printf("\n");
 			ptr2 = txt;
@@ -503,7 +503,7 @@ int GetNiveau (const char *txt)
 		fclose(f);
 	}else
 	{
-		fprintf(stderr, "Impossible d'ouvrir le fichier de codes !!!\n");
+		fprintf(stderr, "Unable to open the code file!\n");
 	}
 	return niveau;
 }
@@ -545,7 +545,7 @@ bool GetNiveau (int niveau, char *txt)
 		fclose(f);
 	}else
 	{
-		fprintf(stderr, "Impossible d'ouvrir le fichier de codes !!!\n");
+		fprintf(stderr, "Unable to open the code file !!!\n");
 	}
 	return false;
 }
@@ -556,7 +556,7 @@ int Jeu::EntreCode ()
 	SDL_Color blanc = {255, 255, 255};
 	SDL_Rect dest;
 	SDL_FillRect(ecran, NULL, SDL_MapRGB(ecran->format, 0, 0, 0));
-	SDL_Surface *txt = TTF_RenderText_Blended(police, "Entre le code d'un niveau :", blanc);
+	SDL_Surface *txt = TTF_RenderText_Blended(police, "Between code from one level :", blanc); //(Entre le code d'un niveau)
 	dest.x = (ecran->w - txt->w)/2;
 	dest.y = 100;
 	SDL_BlitSurface(txt, NULL, ecran, &dest);
@@ -564,8 +564,8 @@ int Jeu::EntreCode ()
 	SDL_FreeSurface(txt);
 	bool cont = true;
 	SDL_Event event;
-	char tamp[255]; //texte entre
-	Uint16 pos = 0; //position du curseur (en nombre de lettres)
+	char tamp[255]; //text between
+	Uint16 pos = 0; //cursor position (number of letters)
 	bool update = false;
 	bool wrong = false;
 	SDL_EnableUNICODE(1);
@@ -588,7 +588,7 @@ int Jeu::EntreCode ()
 					case SDLK_BACKSPACE:
 						if (pos)
 						{
-							s.Play(16); //explosion bombe
+							s.Play(16); //bomb explosion
 							pos--;
 							tamp[pos] = 0;
 							update = true;
@@ -636,7 +636,7 @@ int Jeu::EntreCode ()
 			if (wrong)
 			{
 				SDL_FillRect(ecran, &dest, SDL_MapRGB(ecran->format, 0, 0, 0));
-				txt = TTF_RenderText_Blended(police, "Mauvais code !", blanc);
+				txt = TTF_RenderText_Blended(police, "Bad code!", blanc);
 				dest.x = 200;
 				dest.y = 300;
 				SDL_BlitSurface(txt, NULL, ecran, &dest);
@@ -688,14 +688,14 @@ void Jeu::EditSon ()
 			SDL_FillRect(ecran, NULL, SDL_MapRGB(ecran->format, 0, 0, 0));
 #if TTF
 			if (SON)
-				txt = TTF_RenderText_Blended(police, "F1 Enlever le son", blanc);
+				txt = TTF_RenderText_Blended(police, "Remove the F1", blanc);
 			else
-				txt = TTF_RenderText_Blended(police, "F1 Remettre le son", blanc);
+				txt = TTF_RenderText_Blended(police, "F1 Unmute", blanc);
 			dest.x = 20;
 			dest.y = 20;
 			SDL_BlitSurface(txt, NULL, ecran, &dest);
 			SDL_FreeSurface(txt);
-			txt = TTF_RenderText_Blended(police, "ESC Retour", blanc);
+			txt = TTF_RenderText_Blended(police, "ESC Back", blanc); //ESC Retour
 			dest.x = 20;
 			dest.y = 50;
 			SDL_BlitSurface(txt, NULL, ecran, &dest);
@@ -745,14 +745,14 @@ void Jeu::EditGraph ()
 			SDL_FillRect(ecran, NULL, SDL_MapRGB(ecran->format, 0, 0, 0));
 #if TTF
 			if (ROUGE)
-				txt = TTF_RenderText_Blended(police, "F1 Enlever le clignotement rouge", blanc);
+				txt = TTF_RenderText_Blended(police, "Remove the red flashing F1", blanc);
 			else
-				txt = TTF_RenderText_Blended(police, "F1 Remettre le clignotement rouge", blanc);
+				txt = TTF_RenderText_Blended(police, "Return the flashing red F1", blanc);
 			dest.x = 20;
 			dest.y = 20;
 			SDL_BlitSurface(txt, NULL, ecran, &dest);
 			SDL_FreeSurface(txt);
-			txt = TTF_RenderText_Blended(police, "ESC Retour", blanc);
+			txt = TTF_RenderText_Blended(police, "ESC Back", blanc);
 			dest.x = 20;
 			dest.y = 50;
 			SDL_BlitSurface(txt, NULL, ecran, &dest);
@@ -783,7 +783,7 @@ void Jeu::EditGraph ()
 	}while(cont);
 }
 
-void Jeu::EditKeys () //permet a l'utilisateur de modifier les touches de control
+void Jeu::EditKeys () //allows the user to change the control keys
 {
 	SDL_Rect dest;
 	char tamp[255];
@@ -804,28 +804,28 @@ void Jeu::EditKeys () //permet a l'utilisateur de modifier les touches de contro
 			switch (c)
 			{
 				case 0:
-					txt = TTF_RenderText_Blended(police, "Touche pour aller a gauche ?", blanc);
+					txt = TTF_RenderText_Blended(police, "Key to move left ?", blanc);
 					break;
 				case 1:
-					txt = TTF_RenderText_Blended(police, "Touche pour aller a droite ?", blanc);
+					txt = TTF_RenderText_Blended(police, "Key to move right?", blanc);
 					break;
 				case 2:
-					txt = TTF_RenderText_Blended(police, "Touche pour aller en haut ?", blanc);
+					txt = TTF_RenderText_Blended(police, "Key to move up?", blanc);
 					break;
 				case 3:
-					txt = TTF_RenderText_Blended(police, "Touche pour aller en bas ?", blanc);
+					txt = TTF_RenderText_Blended(police, "Key to move down?", blanc);
 					break;
 				case 4:
-					txt = TTF_RenderText_Blended(police, "Touche pour prendre/deposer ?", blanc);
+					txt = TTF_RenderText_Blended(police, "Key to take/deposit ?", blanc);
 					break;
 				case 5:
-					txt = TTF_RenderText_Blended(police, "Touche pour tirer ?", blanc);
+					txt = TTF_RenderText_Blended(police, "Key to shoot?", blanc);
 					break;
 				case 6:
-					txt = TTF_RenderText_Blended(police, "Touche pour se teleporter ?", blanc);
+					txt = TTF_RenderText_Blended(police, "Key to teleport?", blanc);
 					break;
 				case 7:
-					txt = TTF_RenderText_Blended(police, "Touche pour se suicider ?", blanc);
+					txt = TTF_RenderText_Blended(police, "Key to give up?", blanc);
 					break;
 			}
 			dest.x = 20;
@@ -900,31 +900,31 @@ void Jeu::EditParams ()
 #if TTF
 			dest.x = 20;
 			dest.y = 20;
-			txt = TTF_RenderText_Blended(police, "Parametres", blanc);
+			txt = TTF_RenderText_Blended(police, "Parameters", blanc);
 			SDL_BlitSurface(txt, NULL, ecran, &dest);
 			dest.x += txt->w;
 			SDL_FreeSurface(txt);
 			dest.x = 20;
 			dest.y = 90;
-			txt = TTF_RenderText_Blended(police, "F1 Changer les touches", blanc);
+			txt = TTF_RenderText_Blended(police, "F1 Changes Keys", blanc);
 			SDL_BlitSurface(txt, NULL, ecran, &dest);
 			dest.x += txt->w;
 			SDL_FreeSurface(txt);
 			dest.x = 20;
 			dest.y = 140;
-			txt = TTF_RenderText_Blended(police, "F2 Regler le son", blanc);
+			txt = TTF_RenderText_Blended(police, "F2 Adjust Sound", blanc);
 			SDL_BlitSurface(txt, NULL, ecran, &dest);
 			dest.x += txt->w;
 			SDL_FreeSurface(txt);
 			dest.x = 20;
 			dest.y = 190;
-			txt = TTF_RenderText_Blended(police, "F3 Graphismes", blanc);
+			txt = TTF_RenderText_Blended(police, "F3 Graphics", blanc);
 			SDL_BlitSurface(txt, NULL, ecran, &dest);
 			dest.x += txt->w;
 			SDL_FreeSurface(txt);
 			dest.x = 20;
 			dest.y = 240;
-			txt = TTF_RenderText_Blended(police, "ESC Retour", blanc);
+			txt = TTF_RenderText_Blended(police, "ESC Back", blanc);
 			SDL_BlitSurface(txt, NULL, ecran, &dest);
 			dest.x += txt->w;
 			SDL_FreeSurface(txt);
@@ -971,7 +971,7 @@ void Jeu::DispInfo (Uint16 niveau)
 	SDL_Color blanc = {255, 200, 100};
 	SDL_Surface *txt;
 #if TTF
-	txt = TTF_RenderText_Blended(police, "Niveau ", blanc);
+	txt = TTF_RenderText_Blended(police, "Level ", blanc);
 	dest.x = 20;
 	dest.y = 20;
 	SDL_BlitSurface(txt, NULL, ecran, &dest);
@@ -1012,7 +1012,7 @@ void Jeu::Main ()
 	SDL_Surface *s = SDL_LoadBMP (tamp);
 	//SDL_Surface *sf = SDL_CreateRGBSurface(SDL_HWSURFACE, s->w, s->h, 32, 0, 0, 0, 0); //fond
 	if (!s)
-		fprintf(stderr, "Image de Kalisto absente !!!\n");
+		fprintf(stderr, "Kalisto image missing\n");
 	int i;
 	Uint32 ti,rti;
 	SDL_Event event;
@@ -1047,22 +1047,22 @@ void Jeu::Main ()
 	s = SDL_LoadBMP (tamp);
 	SDL_Color blanc = {255, 200, 100};
 #if TTF
-	SDL_Surface *txt = TTF_RenderText_Blended(police, "F1 Jouer", blanc);
+	SDL_Surface *txt = TTF_RenderText_Blended(police, "F1 Play", blanc);
 	dest.x = 20;
 	dest.y = 300;
 	SDL_BlitSurface(txt, NULL, s, &dest);
 	SDL_FreeSurface(txt);
-	txt = TTF_RenderText_Blended(police, "F2 Entrer un code", blanc);
+	txt = TTF_RenderText_Blended(police, "F2 Enter Code", blanc);
 	dest.x = 20;
 	dest.y = 320;
 	SDL_BlitSurface(txt, NULL, s, &dest);
 	SDL_FreeSurface(txt);
-	txt = TTF_RenderText_Blended(police, "F3 Reglages", blanc);
+	txt = TTF_RenderText_Blended(police, "F3 Settings", blanc);
 	dest.x = 20;
 	dest.y = 340;
 	SDL_BlitSurface(txt, NULL, s, &dest);
 	SDL_FreeSurface(txt);
-	txt = TTF_RenderText_Blended(police, "ESC Quitter", blanc);
+	txt = TTF_RenderText_Blended(police, "ESC Quit", blanc);
 	dest.x = 350;
 	dest.y = 340;
 	SDL_BlitSurface(txt, NULL, s, &dest);
@@ -1116,7 +1116,7 @@ void Jeu::Main ()
 					case SDLK_F4:
 						FadeOut(s, ecran);
 						ChooseTab (&niveau);
-						printf("niveau = %d\n",niveau);
+						printf("level = %d\n",niveau);
 						FadeIn(s, ecran);
 						break;
 #endif
@@ -1135,7 +1135,7 @@ void Jeu::Main ()
 }
 
 /*
-void Jeu::SaveTab (Uint32 n) //enregistre un tableau cree par l'utilisateur
+void Jeu::SaveTab (Uint32 n) //records a table created by the user
 {
 	char txt[40];
 	sprintf(txt,"tableau%d",n);
@@ -1221,10 +1221,10 @@ void Jeu::PutWell (Uint16 x, Uint16 y, Uint16 what)
 void Jeu::Edit (Uint32 niveau)
 {
 	struct Edit e;
-	printf("chargement...\n");
+	printf("loading...\n");
 	e.Load();
 	pvue.y = 0;
-	printf("dessin...\n");
+	printf("drawing...\n");
 	Draw();
 	SDL_BlitSurface(jeu, &vue, ecran, &pvue);
 	e.Draw(im, ecran);
@@ -1232,7 +1232,7 @@ void Jeu::Edit (Uint32 niveau)
 	Update(); //
 	SDL_Event event;
 	bool cont = true;
-	printf("boucle...\n");
+	printf("curly...\n"); //(boucle)
 	bool fill = false;
 	Uint16 x,y;
 	Uint16 rt;
@@ -1332,24 +1332,24 @@ void Jeu::DoOrdi (Uint16 w)
 	{
 		for (x=0;x<DIMX;x++)
 		{
-			if (t.t[x][y] == 168 || t.t[x][y] == 218) //porte d'ordi ouverte ou fermŽe
+			if (t.t[x][y] == 168 || t.t[x][y] == 218) //door open or closed computer?? (porte d'ordi ouverte ou fermÃ©e)
 			{
 				na = 0;
 				switch (w)
 				{
 					case 197:
-						if (t.t[x][y] == 218) //ouvert
-							na = 13; //ferme
+						if (t.t[x][y] == 218) //open
+							na = 13; //solid/hard/definite (ferme)
 						break;
 					case 207:
-						if (t.t[x][y] == 168) //ferme
-							na = 12; //ouvre
+						if (t.t[x][y] == 168) //solid/hard/definite (ferme) 
+							na = 12; //open
 						else
-							na = 13; //ferme
+							na = 13; //solid (ferme)
 						break;
 					case 217:
-						if (t.t[x][y] == 168) //ferme
-							na = 12; //ouvre
+						if (t.t[x][y] == 168) //solid (ferme)
+							na = 12; //open
 						break;
 				}
 				if (na)
@@ -1359,7 +1359,7 @@ void Jeu::DoOrdi (Uint16 w)
 	}
 }
 
-Uint16 Jeu::ActiveRail (Uint16 wrail) //active un rail
+Uint16 Jeu::ActiveRail (Uint16 wrail) //activates a rail
 {
 	if (r[wrail].is(rail))
 	{
@@ -1372,7 +1372,7 @@ Uint16 Jeu::ActiveRail (Uint16 wrail) //active un rail
 	return wrail;
 }
 
-Uint16 Jeu::DesactiveRail (Uint16 wrail) //desactive un rail
+Uint16 Jeu::DesactiveRail (Uint16 wrail) //deactivates a rail
 {
 	if (r[wrail].is(rail))
 	{
@@ -1385,29 +1385,29 @@ Uint16 Jeu::DesactiveRail (Uint16 wrail) //desactive un rail
 	return wrail;
 }
 
-Pos GetRailSens (Uint16 c, Uint8 sens) //donne le sens vers lequel va le rail en fonction du sens d'entree
+Pos GetRailSens (Uint16 c, Uint8 sens) //defines which is the rail with the direction of entry (donne le sens vers lequel va le rail en fonction du) sens d'entree
 {
 	Pos p;
 	p.x = p.y = 0;
-	if ((c == 170 || c == 210 || c == 160 || c == 200)) // && sens == gauche) //vers la gauche
+	if ((c == 170 || c == 210 || c == 160 || c == 200)) // && sens == gauche) //left
 		p.x = -1;
-	if ((c == 190 || c == 230 || c == 180 || c == 220)) // && sens == droite) //vers la droite
+	if ((c == 190 || c == 230 || c == 180 || c == 220)) // && sens == droite) //right
 		p.x = 1;
-	if ((c == 171 || c == 211 || c == 161 || c == 201)) // && sens == haut) //vers le haut
+	if ((c == 171 || c == 211 || c == 161 || c == 201)) // && sens == haut) //up
 		p.y = -1;
-	if ((c == 191 || c == 231 || c == 181 || c == 221)) // && sens == bas) //vers le bas
+	if ((c == 191 || c == 231 || c == 181 || c == 221)) // && sens == bas) //down
 		p.y = 1;
-	if (c == 162 && sens == droite) //rail droite -> bas
+	if (c == 162 && sens == droite) //right rail -> down
 		p.y = 1;
-	if (c == 172 && sens == gauche) //rail gauche -> bas
+	if (c == 172 && sens == gauche) //left rail -> down
 		p.y = 1;
-	if (c == 182 && sens == bas) //rail bas -> droite
+	if (c == 182 && sens == bas) //bottom rail -> right
 		p.x = 1;
-	if (c == 192 && sens == droite) //rail droite -> haut
+	if (c == 192 && sens == droite) //right rail -> up
 		p.y = -1;
-	if (c == 202 && sens == haut) //rail haut -> gauche
+	if (c == 202 && sens == haut) //top rail  -> left
 		p.x = -1;
-	if (c == 212 && sens == haut) //rail haut -> droite
+	if (c == 212 && sens == haut) //top rail -> right
 		p.x = 1;
 	if (c == 222 && sens == gauche) //rail gauche -> haut
 		p.y = -1;
@@ -1560,7 +1560,7 @@ void Jeu::DoPorte (Uint16 x, Uint16 y) //ouverture d'un sens unic
 		Anime(x, y, t.t[x][y]%10);
 }
 
-Pos Jeu::GoodVue () //lˆ ou devrait tre le champ de vision !
+Pos Jeu::GoodVue () //lÃ  ou devrait Ãªtre le champ de vision !
 {
 	Pos p;
 	p.x = t.posx - NX/2;
@@ -2236,7 +2236,7 @@ void Jeu::PutRed (Uint8 red)
  }
  */
 
-//thread chargŽ de gerer les balles, le rouge clignotant et la mise ˆ jour de l'ecran
+//thread chargÃ© de gerer les balles, le rouge clignotant et la mise Ã  jour de l'ecran
 int DoBalls (void *data)
 {
 	int i;
@@ -2269,7 +2269,7 @@ int DoBalls (void *data)
 		rt = SDL_GetTicks();//t;//+TBALLS;
 		if (!retard)
 		{
-			//met ˆ jour ce qui est a l'ecran
+			//met Ã  jour ce qui est a l'ecran
 			SDL_BlitSurface(j->jeu, &j->vue, j->ecran, &j->pvue);
 		}
 		// puis dessine les balles
@@ -2464,7 +2464,7 @@ int DoBalls (void *data)
 	return 0;
 }
 
-//thread chargŽ de mettre ˆ jour le point de vue (reappellŽ ˆ chaque fois)
+//thread chargÃ© de mettre Ã  jour le point de vue (reappellÃ© Ã  chaque fois)
 int DoVue (void *data)
 {
 	Jeu *j = (Jeu *)data;
@@ -2482,7 +2482,7 @@ int DoVue (void *data)
 		{
 			j->updatevue = false;
 			nvue = j->vue;
-			//determine vers o il faut aller
+			//determine vers oÃ¹ il faut aller
 			int dx = 0, dy = 0; //sens du deplacement a effectuer
 			if (j->vposx*CX < j->vue.x + 2*CX)
 				dx = -1;
@@ -2563,7 +2563,7 @@ int DoVue (void *data)
 					dy = 3;
 				if (!dx && !dy)
 					break;
-				if (abs(j->t.posx-(int)((j->vue.x+j->vue.w/2)/CX))+abs(j->t.posy-(int)((j->vue.y+j->vue.h/2)/CY)) >= (NX+NY)/2) //regarde si l'on doit se dŽplacer de beaucoup ou pas
+				if (abs(j->t.posx-(int)((j->vue.x+j->vue.w/2)/CX))+abs(j->t.posy-(int)((j->vue.y+j->vue.h/2)/CY)) >= (NX+NY)/2) //regarde si l'on doit se dÃ©placer de beaucoup ou pas
 				{
 					Pos p = j->GoodVue ();
 					fx = p.x/CX; //on se deplace de beaucoup
@@ -2587,7 +2587,7 @@ int DoVue (void *data)
 		if ((int)t-rt < TVUE)
 			SDL_Delay(TVUE-(t-rt));
 		//else
-		//	printf("DoVue ˆ la bourre...\n");
+		//	printf("DoVue Ã  la bourre...\n");
 		rt = SDL_GetTicks();//t;//+TVUE;
 		x += vx;
 		y += vy;
@@ -2626,9 +2626,9 @@ int DoVue (void *data)
 }
 */
 
-void Jeu::UpdateVue (Uint16 x, Uint16 y) //met ˆ jour le champ de vue
+void Jeu::UpdateVue (Uint16 x, Uint16 y) //met Ã  jour le champ de vue
 {
-	//lance le thread chargŽ de mettre a jour le champ de vue
+	//lance le thread chargÃ© de mettre a jour le champ de vue
 	vposx = x;
 	vposy = y;
 	updatevue = true;
@@ -2640,7 +2640,7 @@ void Jeu::UpdateVue (Uint16 x, Uint16 y) //met ˆ jour le champ de vue
 	}
 }
 
-//thread chargŽ des animations
+//thread chargÃ© des animations
 int DoAnim (void *data)
 {
 	int x,y,dx,dy;
@@ -2660,7 +2660,7 @@ int DoAnim (void *data)
 		if ((int)t-rt < TANIM)
 			SDL_Delay(TANIM-(t-rt));
 		//else
-		//	printf("DoAnimation ˆ la bourre...\n");
+		//	printf("DoAnimation Ã  la bourre...\n");
 		rt = SDL_GetTicks();//t;//+TANIM;
 		for (y=0;y<DIMY;y++)
 		{
@@ -2794,9 +2794,9 @@ int DoAnim (void *data)
 					if (j->r[j->t.t[x][y]].is(onda_mania))
 					{
 						dx = dy = 0;
-						if (j->t.t[x][y] == 282) //essaie d'aller ˆ droite
+						if (j->t.t[x][y] == 282) //essaie d'aller Ã  droite
 							dx = 1;
-						if (j->t.t[x][y] == 273) //essaie d'aller ˆ gauche
+						if (j->t.t[x][y] == 273) //essaie d'aller Ã  gauche
 							dx = -1;
 						if (j->t.t[x][y] == 247) //essaie d'aller vers le bas
 							dy = 1;
@@ -2844,10 +2844,10 @@ int DoAnim (void *data)
 							//l'onda-mania va essayer une nouvelle direction...
 							switch (j->t.t[x][y])
 							{
-								case 282: //essaie d'aller ˆ droite
+								case 282: //essaie d'aller Ã  droite
 									j->t.t[x][y] = 247; //vers le haut
 									break;
-								case 273: //essaie d'aller ˆ gauche
+								case 273: //essaie d'aller Ã  gauche
 									j->t.t[x][y] = 274; //vers le bas
 									break;
 								case 247: //essaie d'aller vers le bas
@@ -3422,7 +3422,7 @@ void Jeu::MoveUs (Uint8 sens)
 			}
 		}
 	}
-	//met ˆ jour le champ de vue
+	//met Ã  jour le champ de vue
 	UpdateVue(t.posx+dx, t.posy+dy);
 	s.Play(2); //son du deplacement
 	Draw(t.posx, t.posy); //on s'efface
@@ -3476,7 +3476,7 @@ void Jeu::MoveUs (Uint8 sens)
 		if ((int)time-rtime < TMUS)
 			SDL_Delay(TMUS-(time-rtime));
 		//else
-		//	printf("MoveUs ˆ la bourre...\n");
+		//	printf("MoveUs Ã  la bourre...\n");
 		//printf("time = %d, rtime = %d, realtime = %d\n",time,rtime,SDL_GetTicks());
 		rtime = SDL_GetTicks();//time;//+TMUS;
 		//
@@ -3524,7 +3524,7 @@ void Jeu::MoveUs (Uint8 sens)
 			NMUS = NMUS0;
 		}
 	}
-	//demarre les objets qui rŽagissent quand on passe dessus
+	//demarre les objets qui rÃ©agissent quand on passe dessus
 	if (r[c].is(react_on)) // || r[t.sol[t.posx][t.posy]].is(react_on))
 	{
 		//printf("react_on...\n");
@@ -3635,7 +3635,7 @@ void Jeu::ChooseTab (Uint16 *niveau)
 #endif
 			pr.x = 0;
 			pr.y = 0;
-			StartVue(); //place le champ de vision o il faut
+			StartVue(); //place le champ de vision oÃ¹ il faut
 #if MAC
 			//Microseconds(&w3);
 #endif
@@ -3775,7 +3775,7 @@ void Jeu::Play (Uint32 niveau)
 	pr.x = 0;
 	pr.y = 0;
 	
-	StartVue(); //place le champ de vision o il faut
+	StartVue(); //place le champ de vision oÃ¹ il faut
 	Draw();
 	//Update();
 	
@@ -3788,9 +3788,9 @@ void Jeu::Play (Uint32 niveau)
 	t.tsens = t.sens;
 	invincible = 0;
 	
-	//lance le thread chargŽ des animations
+	//lance le thread chargÃ© des animations
 	SDL_Thread *tanim = SDL_CreateThread(DoAnim, this);
-	//lance le thread chargŽ des balles
+	//lance le thread chargÃ© des balles
 	SDL_Thread *tballs = SDL_CreateThread(DoBalls, this);
 	
 	SDL_PumpEvents();
@@ -3812,7 +3812,7 @@ void Jeu::Play (Uint32 niveau)
 		if ((int)time-rtime < 50)
 			SDL_Delay(50-(time-rtime));
 		//else
-		//	printf("Play ˆ la bourre...\n");
+		//	printf("Play Ã  la bourre...\n");
 		rtime = SDL_GetTicks();//time+50;
 		if (moveus)
 		{
@@ -3856,7 +3856,7 @@ void Jeu::Play (Uint32 niveau)
 							Load(niveau);
 							pr.x = 0;
 							pr.y = 0;
-							StartVue(); //place le champ de vision o il faut
+							StartVue(); //place le champ de vision oÃ¹ il faut
 							Draw();
 							break;
 						case SDLK_l:
@@ -3866,7 +3866,7 @@ void Jeu::Play (Uint32 niveau)
 							Load(niveau);
 							pr.x = 0;
 							pr.y = 0;
-							StartVue(); //place le champ de vision o il faut
+							StartVue(); //place le champ de vision oÃ¹ il faut
 							Draw();
 							break;
 						case SDLK_o:
@@ -3875,7 +3875,7 @@ void Jeu::Play (Uint32 niveau)
 							Load(niveau);
 							pr.x = 0;
 							pr.y = 0;
-							StartVue(); //place le champ de vision o il faut
+							StartVue(); //place le champ de vision oÃ¹ il faut
 							Draw();
 							break;
 #endif
@@ -4033,7 +4033,7 @@ void Jeu::Play (Uint32 niveau)
 	
 	printf("fin des threads ...\n");
 	
-	//fait quitter le thread chargŽ des animations
+	//fait quitter le thread chargÃ© des animations
 	quitanim = true;
 	pause(10*max(TANIM,max(TVUE,TBALLS))); //laisse le temps au thread de s'arreter
 	SDL_PumpEvents();
