@@ -1409,93 +1409,93 @@ Pos GetRailSens (Uint16 c, Uint8 sens) //defines which is the rail with the dire
 		p.x = -1;
 	if (c == 212 && sens == haut) //top rail -> right
 		p.x = 1;
-	if (c == 222 && sens == gauche) //rail gauche -> haut
+	if (c == 222 && sens == gauche) //left rail -> up
 		p.y = -1;
-	if (c == 232 && sens == bas) //rail bas -> gauche
+	if (c == 232 && sens == bas) //bottom rail -> left
 		p.x = -1;
 	return p;
 }
 
-Pos GetRailSens2 (Uint16 c, Uint8 sens) //donne le sens vers lequel va le rail en fonction du sens d'entree
+Pos GetRailSens2 (Uint16 c, Uint8 sens) //gives meaning to which is the rail with the direction of entry (donne le sens vers lequel va le rail en fonction du sens d'entree)
 {
 	Pos p;
 	p.x = p.y = 0;
-	if ((c == 170 || c == 210 || c == 160 || c == 200) && sens == gauche) //vers la gauche
+	if ((c == 170 || c == 210 || c == 160 || c == 200) && sens == gauche) //left
 		p.x = -1;
-	if ((c == 190 || c == 230 || c == 180 || c == 220) && sens == droite) //vers la droite
+	if ((c == 190 || c == 230 || c == 180 || c == 220) && sens == droite) //right
 		p.x = 1;
-	if ((c == 171 || c == 211 || c == 161 || c == 201) && sens == haut) //vers le haut
+	if ((c == 171 || c == 211 || c == 161 || c == 201) && sens == haut) //up
 		p.y = -1;
-	if ((c == 191 || c == 231 || c == 181 || c == 221) && sens == bas) //vers le bas
+	if ((c == 191 || c == 231 || c == 181 || c == 221) && sens == bas) //down
 		p.y = 1;
-	if (c == 162 && sens == droite) //rail droite -> bas
+	if (c == 162 && sens == droite) //right rail -> down
 		p.y = 1;
-	if (c == 172 && sens == gauche) //rail gauche -> bas
+	if (c == 172 && sens == gauche) //left rail -> down
 		p.y = 1;
-	if (c == 182 && sens == bas) //rail bas -> droite
+	if (c == 182 && sens == bas) //bottom rail -> right
 		p.x = 1;
-	if (c == 192 && sens == droite) //rail droite -> haut
+	if (c == 192 && sens == droite) //right rail  -> up
 		p.y = -1;
-	if (c == 202 && sens == haut) //rail haut -> gauche
+	if (c == 202 && sens == haut) //top rail -> left
 		p.x = -1;
-	if (c == 212 && sens == haut) //rail haut -> droite
+	if (c == 212 && sens == haut) //top rail -> right
 		p.x = 1;
-	if (c == 222 && sens == gauche) //rail gauche -> haut
+	if (c == 222 && sens == gauche) //left rail -> up
 		p.y = -1;
-	if (c == 232 && sens == bas) //rail bas -> gauche
+	if (c == 232 && sens == bas) //bottom rail -> left
 		p.x = -1;
 	return p;
 }
 
-Pos GetRailSens (Uint16 c) //donne le sens vers lequel va le rail en fonction du sens d'entree
+Pos GetRailSens (Uint16 c) //gives meaning to which is the rail with the direction of entry (donne le sens vers lequel va le rail en fonction du sens d'entree)
 {
 	Pos p;
 	p.x = p.y = 0;
-	if (c == 170 || c == 210 || c == 160 || c == 200) //vers la gauche
+	if (c == 170 || c == 210 || c == 160 || c == 200) //left
 		p.x = -1;
-	if (c == 190 || c == 230 || c == 180 || c == 220) //vers la droite
+	if (c == 190 || c == 230 || c == 180 || c == 220) //right
 		p.x = 1;
-	if (c == 171 || c == 211 || c == 161 || c == 201) //vers le haut
+	if (c == 171 || c == 211 || c == 161 || c == 201) //up
 		p.y = -1;
-	if (c == 191 || c == 231 || c == 181 || c == 221) //vers le bas
+	if (c == 191 || c == 231 || c == 181 || c == 221) //down
 		p.y = 1;
-	if (c == 162) //rail droite -> bas
+	if (c == 162) //right rail -> down
 		p.y = 1;
-	if (c == 172) //rail gauche -> bas
+	if (c == 172) //left rail -> down
 		p.y = 1;
-	if (c == 182) //rail bas -> droite
+	if (c == 182) //bottom rail -> right
 		p.x = 1;
-	if (c == 192) //rail droite -> haut
+	if (c == 192) //right rail -> up
 		p.y = -1;
-	if (c == 202) //rail haut -> gauche
+	if (c == 202) //top rail -> left
 		p.x = -1;
-	if (c == 212) //rail haut -> droite
+	if (c == 212) //top rail -> right
 		p.x = 1;
-	if (c == 222) //rail gauche -> haut
+	if (c == 222) //left rail -> up
 		p.y = -1;
-	if (c == 232) //rail bas -> gauche
+	if (c == 232) //bottom rail -> left
 		p.x = -1;
 	return p;
 }
 
-void Jeu::ActiveRail (Uint16 x, Uint16 y) //active un rail
+void Jeu::ActiveRail (Uint16 x, Uint16 y) //activate rail
 {
 	t.t[x][y] = ActiveRail(t.t[x][y]);
 }
 
-void Jeu::DesactiveRail (Uint16 x, Uint16 y) //desactive un rail
+void Jeu::DesactiveRail (Uint16 x, Uint16 y) //deactivate rail
 {
 	t.t[x][y] = DesactiveRail(t.t[x][y]);
 }
 
-void Jeu::OuvrePortes (Uint16 c) //ouvre toutes les portes de couleur c (apres avoir tire dans un rond colore)
+void Jeu::OuvrePortes (Uint16 c) //opens all doors color c (after pulling in a colored circle)?? (ouvre toutes les portes de couleur c (apres avoir tire dans un rond colore))
 {
 	Uint16 x,y;
 	for (y=0;y<DIMY;y++)
 	{
 		for (x=0;x<DIMX;x++)
 		{
-			if (t.t[x][y] == 80 + (c%10)) //porte colore
+			if (t.t[x][y] == 80 + (c%10)) //door color
 			{
 				//printf("ouverture d'une porte en (%d,%d)...\n",x,y);
 				Anime(x, y, c%10);
@@ -1512,7 +1512,7 @@ void Jeu::OpenBarriere ()
 	{
 		for (x=0;x<DIMX;x++)
 		{
-			if (t.t[x][y] == 139 || t.a[x][y].n == 10) //barriere ferme ou qui se ferme
+			if (t.t[x][y] == 139 || t.a[x][y].n == 10) //close door
 			{
 				//printf("ouverture d'une porte en (%d,%d)...\n",x,y);
 				Anime(x, y, 9);
@@ -1529,7 +1529,7 @@ void Jeu::CloseBarriere ()
 	{
 		for (x=0;x<DIMX;x++)
 		{
-			if (t.t[x][y] == 89 || t.a[x][y].n == 9) //barriere ouverte ou qui s'ouvre
+			if (t.t[x][y] == 89 || t.a[x][y].n == 9) //open door
 			{
 				//printf("ouverture d'une porte en (%d,%d)...\n",x,y);
 				Anime(x, y, 10);
@@ -1538,7 +1538,7 @@ void Jeu::CloseBarriere ()
 	}
 }
 
-void Jeu::OpenPortes () //ouvre toutes les portes (apres avoir mis la cle dans la serrure)
+void Jeu::OpenPortes () //opens every door (after having put the key in the lock)
 {
 	Uint16 x,y;
 	for (y=0;y<DIMY;y++)
@@ -1554,13 +1554,13 @@ void Jeu::OpenPortes () //ouvre toutes les portes (apres avoir mis la cle dans l
 	}
 }
 
-void Jeu::DoPorte (Uint16 x, Uint16 y) //ouverture d'un sens unic
+void Jeu::DoPorte (Uint16 x, Uint16 y) //open one-way door
 {
 	if (!t.a[x][y].n)
 		Anime(x, y, t.t[x][y]%10);
 }
 
-Pos Jeu::GoodVue () //là ou devrait être le champ de vision !
+Pos Jeu::GoodVue () //field of view? (là ou devrait être le champ de vision !)
 {
 	Pos p;
 	p.x = t.posx - NX/2;
@@ -1595,7 +1595,7 @@ Sint8 signe (Sint8 n)
 	return 0;
 }
 
-void Jeu::Balle(Uint16 x,Uint16  y,int dx,int dy) //lance une balle depuis (x,y), dans la direction (dx,dy)
+void Jeu::Balle(Uint16 x,Uint16  y,int dx,int dy) //throws a ball from (x, y) in the direction (dx, dy)
 {
 	int i;
 	if ((Uint16)(x+dx) < DIMX)
@@ -1628,7 +1628,7 @@ void Jeu::Balle(Uint16 x,Uint16  y,int dx,int dy) //lance une balle depuis (x,y)
 	}
 }
 /*
-void Jeu::Balle2(Uint16 x,Uint16  y,int dx,int dy) //lance une balle depuis (x,y), dans la direction (dx,dy)
+void Jeu::Balle2(Uint16 x,Uint16  y,int dx,int dy) //throws a ball from (x, y) in the direction (dx, dy)
 {
 	int i;
 	for (i=0;i<NBMAX;i++)
@@ -1713,12 +1713,12 @@ void Jeu::Teleporte (Uint16 w)
 	}
 }
 
-void Jeu::Vue () //loupe
+void Jeu::Vue () //zoom
 {
 	SDL_Event event;
-	SDL_Rect rvue = vue; //retient l'ancienne position
+	SDL_Rect rvue = vue; //retains the old position
 	bool cont = true;
-	Uint32 time = 5000; //temps de vue
+	Uint32 time = 5000; //time view
 	Uint32 ti,rti;
 	rti = SDL_GetTicks();
 	Uint8 *keystate;
@@ -1777,7 +1777,7 @@ void Jeu::Vue () //loupe
 	}while(cont && !quit);
 	if (!quit)
 	{
-		//revient a la position initiale
+		//returns to the initial position
 		MoveVueTo(rvue);
 	}
 	t.t[t.posx][t.posy] = 0;
@@ -1788,7 +1788,7 @@ void Jeu::ReactOn (Uint16 x, Uint16 y)
 	Uint16 c = t.t[x][y];
 	//Uint16 c2 = t.t[x][y];
 	int dx, dy;
-	if (c == 285 || c == 295 || c == 305 || c == 315) //tireur
+	if (c == 285 || c == 295 || c == 305 || c == 315) //shooter
 	{
 		dx = dy = 0;
 		if (c == 285)
@@ -1801,28 +1801,28 @@ void Jeu::ReactOn (Uint16 x, Uint16 y)
 			dy = -1;
 		s.Play(5);
 		//printf("Lancement d'une balle en (%d,%d), vers (%d,%d)..\n",x,y,dx,dy);
-		Balle(x, y, dx, dy); //lance une balle depuis (x,y), dans la direction (dx,dy)
+		Balle(x, y, dx, dy); //throws a ball from (x, y) in the direction (dx, dy)
 	}
 	if (c == 310) //vue
 	{
 		s.Play(15);
 		Vue ();
 	}
-	if (c == 307) //accelerateur
+	if (c == 307) //accelerator
 	{
 		tNMUS = tNMUS0;
 		NMUS = NMUS0/2;
 		s.Play(1);
 		t.t[x][y] = 0;
 	}
-	if (c == 281) //invincibilite
+	if (c == 281) //invincibility
 	{
 		s.Play(1);
 		t.t[x][y] = 0;
 		invincible = INVINCIBLE;
 	}
 	//printf("react_on !\n");
-	if (c == 283 || c == 297) //truc ou on reapparait
+	if (c == 283 || c == 297) //trick or it reappears?? (truc ou on reapparait)
 	{
 		t.sx = x;
 		t.sy = y;
@@ -1835,7 +1835,7 @@ void Jeu::Perdu ()
 {
 	if (quit)
 		return;
-	if (t.t[t.posx][t.posy] != 317 && !invincible) //case d'invincibilite ou invincible
+	if (t.t[t.posx][t.posy] != 317 && !invincible) //box of invincibility? (case d'invincibilite ou invincible)
 	{
 		Anime(t.posx, t.posy, 27);
 		if (win != gagne)
@@ -1851,7 +1851,7 @@ void Jeu::Perdu ()
 	}
 }
 
-void Jeu::DoBall (Uint16 x, Uint16 y) //action d'une balle ou explosion en (x,y)
+void Jeu::DoBall (Uint16 x, Uint16 y) //bullet or explosion (x,y)
 {
 	int dx,dy;
 	Uint16 c = t.t[x][y];
@@ -1860,40 +1860,40 @@ void Jeu::DoBall (Uint16 x, Uint16 y) //action d'une balle ou explosion en (x,y)
 		if (!invincible)
 			Perdu ();
 	}
-	if (r[c].is(rail_tourne)) //rail tournant
+	if (r[c].is(rail_tourne)) //rail turning
 	{
 		switch (t.t[x][y])
 		{
-			case 162: //gauche bas
-				c = 192; //gauche haut
+			case 162: //bottom left
+				c = 192; //top left
 				break;
-			case 192: //gauche haut
-				c = 162; //gauche bas
+			case 192: //top left
+				c = 162; //bottom left
 				break;
-			case 172: //droite bas
-				c = 222; //droite haut
+			case 172: //bottom right
+				c = 222; //top right
 				break;
-			case 222: //droite haut
-				c = 172; //droite bas
+			case 222: //top right
+				c = 172; //bottom right
 				break;
-			case 182: //haut droite
-				c = 232; //haut gauche
+			case 182: //top right
+				c = 232; //top left
 				break;
-			case 232: //haut gauche
-				c = 182; //haut droite
+			case 232: //top left
+				c = 182; //bottom right
 				break;
-			case 202: //bas gauche
-				c = 212; //bas droite
+			case 202: //bottom left
+				c = 212; //bottom right
 				break;
-			case 212: //bas droite
-				c = 202; //bas gauche
+			case 212: //bottom right
+				c = 202; //bottom left
 				break;
 		}
 		t.t[x][y] = c;
 		Draw(x, y);
 		//printf("Changement de rail...\n");
 	}
-	if (c == 233) //truc qui se detruit au bout de 10 balles
+	if (c == 233) //destroy after 10 balls?? (truc qui se detruit au bout de 10 balles)
 	{
 		t.a[x][y].t++;
 		if (t.a[x][y].t >= 10)
@@ -1905,13 +1905,13 @@ void Jeu::DoBall (Uint16 x, Uint16 y) //action d'une balle ou explosion en (x,y)
 	if (r[c].is(onda_mania_bouge))
 	{
 		dx = dy = 0;
-		if (t.a[x][y].n == 19 || t.a[x][y].n == 23) //onda-mania case gauche
+		if (t.a[x][y].n == 19 || t.a[x][y].n == 23) //onda-mania case left
 			dx = 1;
-		if (t.a[x][y].n == 20 || t.a[x][y].n == 24) //onda-mania case droite
+		if (t.a[x][y].n == 20 || t.a[x][y].n == 24) //onda-mania case right
 			dx = -1;
-		if (t.a[x][y].n == 21 || t.a[x][y].n == 25) //onda-mania case haute
+		if (t.a[x][y].n == 21 || t.a[x][y].n == 25) //onda-mania case top
 			dy = 1;
-		if (t.a[x][y].n == 22 || t.a[x][y].n == 26) //onda-mania case basse
+		if (t.a[x][y].n == 22 || t.a[x][y].n == 26) //onda-mania case bottom
 			dy = -1;
 		if (dx || dy)
 		{
@@ -1924,7 +1924,7 @@ void Jeu::DoBall (Uint16 x, Uint16 y) //action d'une balle ou explosion en (x,y)
 		s.Play(6);
 		Anime(x, y, 28); //explosion
 	}
-	if (c == 285 || c == 295 || c == 305 || c == 315) //tireur
+	if (c == 285 || c == 295 || c == 305 || c == 315) //shooter
 	{
 		dx = dy = 0;
 		if (c == 285)
@@ -1937,26 +1937,26 @@ void Jeu::DoBall (Uint16 x, Uint16 y) //action d'une balle ou explosion en (x,y)
 			dy = -1;
 		s.Play(5);
 		//printf("Lancement d'une balle en (%d,%d), vers (%d,%d)..\n",x,y,dx,dy);
-		Balle(x, y, dx, dy); //lance une balle depuis (x,y), dans la direction (dx,dy)
+		Balle(x, y, dx, dy); //throws a ball from (x, y) in the direction (dx, dy)
 	}
-	if (c == 287) //tireur vers le bas special
+	if (c == 287) //shooter down special
 	{
 		s.Play(5);
 		Balle(x, y, 0, 1);
 	}
-	if (r[t.t[x][y]].is(explosif)) //explosif
+	if (r[t.t[x][y]].is(explosif)) //explosive
 	{
 		DoExplosif(x, y);
 	}
-	if (t.t[x][y] == 164) //pastille verte
+	if (t.t[x][y] == 164) //green patch
 	{
 		DoPastille(x,y,164);
 	}
-	if (t.t[x][y] == 165) //pastille grise
+	if (t.t[x][y] == 165) //gray patch
 	{
 		DoPastille(x,y,165);
 	}
-	if (t.t[x][y] == 169) //ordi
+	if (t.t[x][y] == 169) //computer
 	{
 		dx = dy = 0;
 		for (dy=-1;dy<=1;dy++)
@@ -1977,24 +1977,24 @@ void Jeu::DoBall (Uint16 x, Uint16 y) //action d'une balle ou explosion en (x,y)
 			}
 		}
 	}
-	if (r[t.t[x][y]].is(fleche)) //fleches
+	if (r[t.t[x][y]].is(fleche)) //arrows
 	{
 		Anime(x, y, 28); //explosion
 		switch (t.t[x][y])
 		{
-			case 286: //haut
+			case 286: //top
 				t.sens = haut;
 				//MoveUs(haut);
 				break;
-			case 296: //droite
+			case 296: //right
 				t.sens = droite;
 				//MoveUs(droite);
 				break;
-			case 306: //bas
+			case 306: //bottom
 				t.sens = bas;
 				//MoveUs(bas);
 				break;
-			case 316: //gauche
+			case 316: //left
 				t.sens = gauche;
 				//MoveUs(gauche);
 				break;
@@ -2023,12 +2023,12 @@ void Jeu::DoBall (Uint16 x, Uint16 y) //action d'une balle ou explosion en (x,y)
 	{
 		DoGrenade(x, y);
 	}
-	if (r[t.t[x][y]].is(plante)) //plante
+	if (r[t.t[x][y]].is(plante)) //plant
 	{
 		s.Play(16);
 		Anime(x, y, 28); //explosion
 	}
-	if (r[t.t[x][y]].is(rond_colore)) //rond colore
+	if (r[t.t[x][y]].is(rond_colore)) //round color
 	{
 		s.Play(16);
 		Anime(x, y, 28); //explosion
@@ -2042,7 +2042,7 @@ void Jeu::DoBall (Uint16 x, Uint16 y) //action d'une balle ou explosion en (x,y)
 		{
 			if (t.t[x+1][y] == 0)
 			{
-				t.t[x+1][y] = 61; //missile droit
+				t.t[x+1][y] = 61; //missile right
 				Draw(x+1, y);
 				if (x+1 == t.posx && y == t.posy)
 					DrawUs();
@@ -2052,7 +2052,7 @@ void Jeu::DoBall (Uint16 x, Uint16 y) //action d'une balle ou explosion en (x,y)
 		{
 			if (t.t[x-1][y] == 0)
 			{
-				t.t[x-1][y] = 62; //missile gauche
+				t.t[x-1][y] = 62; //missile left
 				Draw(x-1, y);
 				if (x-1 == t.posx && y == t.posy)
 					DrawUs();
@@ -2062,7 +2062,7 @@ void Jeu::DoBall (Uint16 x, Uint16 y) //action d'une balle ou explosion en (x,y)
 		{
 			if (t.t[x][y+1] == 0)
 			{
-				t.t[x][y+1] = 70; //missile bas
+				t.t[x][y+1] = 70; //missile bottom
 				Draw(x, y+1);
 				if (x == t.posx && y+1 == t.posy)
 					DrawUs();
@@ -2072,7 +2072,7 @@ void Jeu::DoBall (Uint16 x, Uint16 y) //action d'une balle ou explosion en (x,y)
 		{
 			if (t.t[x][y-1] == 0)
 			{
-				t.t[x][y-1] = 63; //missile haut
+				t.t[x][y-1] = 63; //missile top
 				Draw(x, y-1);
 				if (x == t.posx && y-1 == t.posy)
 					DrawUs();
@@ -2088,7 +2088,7 @@ void Jeu::DoGrenade (Uint16 x, Uint16 y)
 		s.Play(20);
 	}
 	int dx,dy;
-	t.t[x][y] = 224; //trou
+	t.t[x][y] = 224; //hole
 	for (dx=-1;dx<=1;dx++)
 	{
 		for (dy=-1;dy<=1;dy++)
@@ -2114,9 +2114,9 @@ void Jeu::DoGrenade (Uint16 x, Uint16 y)
 	}
 }
 
-void Jeu::DoExplosif (Uint16 x, Uint16 y) //demarre un explosif situe en (x,y)
+void Jeu::DoExplosif (Uint16 x, Uint16 y) //Start an explosive located at (x, y)
 {
-	if (t.t[x][y] == 151) //bombe a retardement
+	if (t.t[x][y] == 151) //time bomb
 	{
 		Anime(x, y, 11);
 		return;
@@ -2124,17 +2124,17 @@ void Jeu::DoExplosif (Uint16 x, Uint16 y) //demarre un explosif situe en (x,y)
 	//printf("Lancement d'un explosif en (%d,%d)...\n",x,y);
 	if ((x-t.posx)*(x-t.posx) + (y-t.posy)*(y-t.posy) < DHEAR2)
 	{
-		s.Play(16); //joue le son
+		s.Play(16); //plays the sound
 	}
 	int dx,dy;
-	Anime(x , y, 33); //centre de l'explosion
+	Anime(x , y, 33); //center of explosion
 	for (dx=-1;dx<=1;dx++)
 	{
 		for (dy=-1;dy<=1;dy++)
 		{
 			if (x+dx >= 0 && x+dx < DIMX && y+dy >= 0 && y+dy < DIMY)
 			{
-				if (t.t[x+dx][y+dy] == 300) //on gagne !!!
+				if (t.t[x+dx][y+dy] == 300) //we win
 				{
 					Anime(x+dx, y+dy, 27);
 					win = gagne;
@@ -2236,7 +2236,7 @@ void Jeu::PutRed (Uint8 red)
  }
  */
 
-//thread chargé de gerer les balles, le rouge clignotant et la mise à jour de l'ecran
+//thread that manage the balls, flashing red and the update of the screen
 int DoBalls (void *data)
 {
 	int i;
@@ -2272,12 +2272,12 @@ int DoBalls (void *data)
 			//met à jour ce qui est a l'ecran
 			SDL_BlitSurface(j->jeu, &j->vue, j->ecran, &j->pvue);
 		}
-		// puis dessine les balles
+		// draw balls
 		for (i=0;i<NBMAX;i++)
 		{
 			if (j->b[i].used)
 			{
-				//regarde si la balle arrive sur une nouvelle case
+				//see if the ball lands on a new box
 				x = (int)((j->b[i].x+j->b[i].vx)/CX);
 				y = (int)((j->b[i].y+j->b[i].vy)/CY);
 				if ((Uint16)x >= DIMX || (Uint16)y >= DIMY)
@@ -2286,28 +2286,28 @@ int DoBalls (void *data)
 					continue;
 				}
 				if (x == j->t.posx && y == j->t.posy)
-				{//la balle nous touche
+				{//ball hits us
 					j->Perdu ();
 				}
-				if ((int)(j->b[i].x/CX) != x || (int)(j->b[i].y/CY) != y || j->b[i].react == 0) //nouvelle case
+				if ((int)(j->b[i].x/CX) != x || (int)(j->b[i].y/CY) != y || j->b[i].react == 0) //new box
 				{
 					j->b[i].react = 1;
 					if (x < 0 || y < 0 || x >= DIMX || y >= DIMY)
-					{//la balle sort du jeu
+					{//ball out of field
 						//printf("sortie !\n");
 						j->b[i].used = false;
 					}else
 					{
 						if (j->r[j->t.t[x][y]].is(react_ball))
-						{//la balle reagit avec l'objet
+						{//ball hits object
 							j->DoBall(x, y);
 							j->b[i].used = false;
 						}
 						if (j->r[j->t.t[x][y]].is(stop_ball))
-						{//la balle s'arrete
+						{//ball stops
 							j->b[i].used = false;
 							//printf("vx=%d, vy=%d.\n",j->b[i].vx,j->b[i].vy);
-							if (j->b[i].vx != 0 && j->b[i].vy != 0) //balle diagonale
+							if (j->b[i].vx != 0 && j->b[i].vy != 0) //diagonal ball
 							{
 								//printf("balle diagonale.../n");
 								if (j->r[j->t.t[x][y]].is(mur))
@@ -2316,7 +2316,7 @@ int DoBalls (void *data)
 									int rx,ry;
 									rx = (int)(j->b[i].x/CX);
 									ry = (int)(j->b[i].y/CY);
-									//rebond
+									//bounce
 									if (x!=rx && y!=ry)
 									{
 										if (j->r[j->t.t[rx][y]].is(mur))
@@ -2344,38 +2344,38 @@ int DoBalls (void *data)
 						}
 					}
 				}
-				if (((int)((j->b[i].x+signe(j->b[i].vx)*CX/2)/CX) != x || (int)((j->b[i].y+signe(j->b[i].vy)*CY/2)/CY) != y) && j->b[i].react != 2) //milieu de case
+				if (((int)((j->b[i].x+signe(j->b[i].vx)*CX/2)/CX) != x || (int)((j->b[i].y+signe(j->b[i].vy)*CY/2)/CY) != y) && j->b[i].react != 2) //middle box
 				{
 					j->b[i].react = 2;
 					if (j->r[j->t.t[x][y]].is(act_ball))
-					{//l'objet agit sur la balle
+					{//object is on the ball
 						switch (j->t.t[x][y])
 						{
-							case 284: //miroir anti-diagonal
+							case 284: //anti-diagonal mirror
 							case 203:
 								tamp = j->b[i].vy;
 								j->b[i].vy = -j->b[i].vx;
 								j->b[i].vx = -tamp;
 								break;
-							case 294: //miroir diagonal
+							case 294: //diagonal mirror
 							case 213:
 								tamp = j->b[i].vy;
 								j->b[i].vy = j->b[i].vx;
 								j->b[i].vx = tamp;
 								break;
-							case 304: //miroir reflexion horizontale
+							case 304: //horizontal mirror
 							case 193:
 								j->b[i].vx = -j->b[i].vx;
 								break;
-							case 314: //miroir reflexion verticale
+							case 314: //vertical mirror
 							case 183:
 								j->b[i].vy = -j->b[i].vy;
 								break;
-							case 291: //miroir reflexion horizontale et verticale
+							case 291: //horizontal and vertical mirror
 								j->b[i].vx = -j->b[i].vx;
 								j->b[i].vy = -j->b[i].vy;
 								break;
-							case 301: //tireur multiple
+							case 301: //multiple shooter
 								j->b[i].used = false;
 								//j->s.Play(5);
 								j->Balle(x, y, 1, 0);
@@ -2383,28 +2383,28 @@ int DoBalls (void *data)
 								j->Balle(x, y, 0, 1);
 								j->Balle(x, y, 0, -1);
 								break;
-							case 285: //canon gauche
+							case 285: //cannon left
 								j->s.Play(5);
 								j->Balle(x, y, -1, 0);
 								break;
-							case 295: //canon droit
+							case 295: //cannon right
 								j->s.Play(5);
 								j->Balle(x, y, 1, 0);
 								break;
-							case 305: //canon bas
+							case 305: //cannon bottom
 								j->s.Play(5);
 								j->Balle(x, y, 0, 1);
 								break;
-							case 315: //canon haut
+							case 315: //cannon top
 								j->s.Play(5);
 								j->Balle(x, y, 0, -1);
 								break;
-							case 287: //canon bas special
+							case 287: //cannon bottom special
 								j->s.Play(5);
 								j->Balle(x, y, 0, 1);
 								j->b[i].used = false;
 								break;
-							case 280: //tireur en diagonale vert (tir dans tous les sens)
+							case 280: //green diagonal shooter (shooting in all directions)
 								j->s.Play(5);
 								j->Balle(x, y, -1, -1);
 								j->Balle(x, y, -1, 1);
@@ -2412,7 +2412,7 @@ int DoBalls (void *data)
 								j->Balle(x, y, 1, 1);
 								j->b[i].used = false;
 								break;
-							case 290: //tireur en diagonale jaune (tir une balle vers nous)
+							case 290: //shooter yellow diagonal (shooting a bullet at us)
 								if (x < j->t.posx)
 									dx = 1;
 								else
@@ -2427,14 +2427,14 @@ int DoBalls (void *data)
 						}
 					}
 				}
-				//fait avancer la balle
+				//move the ball
 				j->b[i].x += j->b[i].vx;
 				j->b[i].y += j->b[i].vy;
-				//redessine la balle
+				//redraws the ball
 				j->DrawBall(j->b[i].x, j->b[i].y);
 			}
 		}
-		//met le rouge
+		//put red?? (met le rouge)
 		if (!retard)
 		{
 			if (red > 255)
@@ -2454,22 +2454,22 @@ int DoBalls (void *data)
 			}
 			red += vred;
 		}
-		//affiche
+		//poster?? (affiche)
 		if (!retard)
 			SDL_Flip(j->ecran);
 		if (retard)
 			retard--;
 	}while(!j->quitanim);
-	printf("Fin de DoBalls !\n");
+	printf("End of DoBalls !\n");
 	return 0;
 }
 
-//thread chargé de mettre à jour le point de vue (reappellé à chaque fois)
+//thread that updates the view  (thread chargé de mettre à jour le point de vue (reappellé à chaque fois))
 int DoVue (void *data)
 {
 	Jeu *j = (Jeu *)data;
 	j->dovuerun = true;
-	SDL_Rect nvue; //nouvelle zone de vue
+	SDL_Rect nvue; //new to area
 	bool update = true;
 	do
 	{
@@ -2482,8 +2482,8 @@ int DoVue (void *data)
 		{
 			j->updatevue = false;
 			nvue = j->vue;
-			//determine vers où il faut aller
-			int dx = 0, dy = 0; //sens du deplacement a effectuer
+			//to determine where to go
+			int dx = 0, dy = 0; //sense of displacement was carried out?? (sens du deplacement a effectuer)
 			if (j->vposx*CX < j->vue.x + 2*CX)
 				dx = -1;
 			if (j->vposx*CX >= j->vue.x + j->vue.w - 2*CX)
@@ -2508,12 +2508,12 @@ int DoVue (void *data)
 				//return 0;
 				continue;
 			}
-			//effectue le deplacement
+			//performs the movement
 			j->MoveVueTo2(nvue);
 		}
 	}while(!j->quit && !j->quitanim);
 	j->dovuerun = false;
-	printf("Fin de DoVue...\n");
+	printf("End of DoVue...\n");
 }
 /*
 int DoVue (void *data)
@@ -2626,21 +2626,21 @@ int DoVue (void *data)
 }
 */
 
-void Jeu::UpdateVue (Uint16 x, Uint16 y) //met à jour le champ de vue
+void Jeu::UpdateVue (Uint16 x, Uint16 y) //updates the field of view
 {
-	//lance le thread chargé de mettre a jour le champ de vue
+	//launches the thread that updates the field of view
 	vposx = x;
 	vposy = y;
 	updatevue = true;
 	if (!dovuerun)
 	{
 		dovuerun = true;
-		printf("Lancement de Dovue...\n");
+		printf("call DoVue...\n");
 		SDL_CreateThread(DoVue, this);
 	}
 }
 
-//thread chargé des animations
+//thread responsible for animations
 int DoAnim (void *data)
 {
 	int x,y,dx,dy;
@@ -2676,7 +2676,7 @@ int DoAnim (void *data)
 				n = j->t.a[x][y].n;
 				if (!n)
 				{
-					//tapis roulant
+					//conveyor belt?? (tapis roulant)
 					if (j->r[j->t.t[x][y]].is(tapis_roulant))
 					{
 						j->t.a[x][y].t++;
@@ -2693,8 +2693,8 @@ int DoAnim (void *data)
 								j->DrawUs();
 						}
 					}
-					//mechants
-					if (j->t.t[x][y] == 240) //mechant horizontal gauche
+					//enemy
+					if (j->t.t[x][y] == 240) //enemy horizontal left
 					{
 						ok = false;
 						if (x > 0)
@@ -2718,7 +2718,7 @@ int DoAnim (void *data)
 							}
 						}
 					}
-					if (j->t.t[x][y] == 328) //mechant horizontal droit
+					if (j->t.t[x][y] == 328) //enemy horizontal right
 					{
 						ok = false;
 						if (x < DIMX-1)
@@ -2742,7 +2742,7 @@ int DoAnim (void *data)
 							}
 						}
 					}
-					if (j->t.t[x][y] == 322) //mechant vertical haut
+					if (j->t.t[x][y] == 322) //enemy vertical up
 					{
 						ok = false;
 						if (y > 0)
@@ -2766,7 +2766,7 @@ int DoAnim (void *data)
 							}
 						}
 					}
-					if (j->t.t[x][y] == 340) //mechant vertical bas
+					if (j->t.t[x][y] == 340) //enemy vertical down
 					{
 						ok = false;
 						if (y < DIMY-1)
@@ -2794,13 +2794,13 @@ int DoAnim (void *data)
 					if (j->r[j->t.t[x][y]].is(onda_mania))
 					{
 						dx = dy = 0;
-						if (j->t.t[x][y] == 282) //essaie d'aller à droite
+						if (j->t.t[x][y] == 282) //try to go right
 							dx = 1;
-						if (j->t.t[x][y] == 273) //essaie d'aller à gauche
+						if (j->t.t[x][y] == 273) //try to go left
 							dx = -1;
-						if (j->t.t[x][y] == 247) //essaie d'aller vers le bas
+						if (j->t.t[x][y] == 247) //try to go down
 							dy = 1;
-						if (j->t.t[x][y] == 274) //essaie d'aller vers le haut
+						if (j->t.t[x][y] == 274) //try to go up
 							dy = -1;
 						if ((Uint16)(x+dx) <= DIMX && (Uint16)(y+dy) <= DIMY)
 						{
@@ -2814,19 +2814,19 @@ int DoAnim (void *data)
 									int na,na2;
 									switch (j->t.t[x][y])
 									{
-										case 282: //vers la droite
+										case 282: //go right
 											na = 23;
 											na2 = 24;
 											break;
-										case 273: //vers la gauche
+										case 273: //go left
 											na = 20;
 											na2 = 19;
 											break;
-										case 274: //vers le haut
+										case 274: //go up
 											na = 22;
 											na2 = 21;
 											break;
-										case 247: //vers le bas
+										case 247: //go down
 											na = 25;
 											na2 = 26;
 											break;
@@ -2841,20 +2841,20 @@ int DoAnim (void *data)
 						if (dx != 0 || dy != 0)
 						{
 							//printf("%d : essaie de nouvelle direction... ",j->t.t[x][y]);
-							//l'onda-mania va essayer une nouvelle direction...
+							//the (ondo-mania?) will try a new direction
 							switch (j->t.t[x][y])
 							{
-								case 282: //essaie d'aller à droite
-									j->t.t[x][y] = 247; //vers le haut
+								case 282: //trying to go right
+									j->t.t[x][y] = 247; //go up
 									break;
-								case 273: //essaie d'aller à gauche
-									j->t.t[x][y] = 274; //vers le bas
+								case 273: //trying to go left
+									j->t.t[x][y] = 274; //go down
 									break;
-								case 247: //essaie d'aller vers le bas
-									j->t.t[x][y] = 273; //vers la gauche
+								case 247: //trying to go down
+									j->t.t[x][y] = 273; //go left
 									break;
-								case 274: //essaie d'aller vers le haut
-									j->t.t[x][y] = 282; //vers la droite
+								case 274: //trying to go up
+									j->t.t[x][y] = 282; //go right
 									break;
 							}
 							//printf(" -> %d !\n",j->t.t[x][y]);
@@ -2863,7 +2863,7 @@ int DoAnim (void *data)
 				}
 				if (n)
 				{
-					if ((n == 32 || n == 42) && j->t.a[x][y].t == j->a[n].t-1) //rail qui s'eteint //pile infinie
+					if ((n == 32 || n == 42) && j->t.a[x][y].t == j->a[n].t-1) //rail that goes off //infinite stack
 					{
 						//printf("rail ou pile...\n");
 						/*
@@ -2879,7 +2879,7 @@ int DoAnim (void *data)
 							j->s.Play(21); //pulse
 						}
 						 */
-						if (n == 32) //rail qui s'eteint
+						if (n == 32) //rail gets deactivated
 						{
 							j->DesactiveRail(x, y);
 							j->Draw(x, y);
@@ -2897,7 +2897,7 @@ int DoAnim (void *data)
 							if (j->r[j->t.t[x+p.x][y+p.y]].is(rail))
 							{
 								//Pos p2 = GetRailSens2 (j->t.t[x+p.x][y+p.y], GetSens(p.x, p.y));
-								//if (p2.x || p2.y) //verifie que le rail va bien dans le meme sens
+								//if (p2.x || p2.y) //verifies that the track goes in the same direction
 								{
 									j->ActiveRail(x+p.x, y+p.y);
 									j->Draw(x+p.x, y+p.y);
@@ -2914,10 +2914,10 @@ int DoAnim (void *data)
 							}
 						}
 						if (n == 42)
-							j->Anime(x, y, 42); //relance la pile infinie
+							j->Anime(x, y, 42); //relaunch infinite stack (relance la pile infinie)
 					}
 					/*
-					if (n == 32 && j->t.a[x][y].t >= j->a[n].t-1) //rail qui s'eteint
+					if (n == 32 && j->t.a[x][y].t >= j->a[n].t-1) //rail gets deactivated
 					{
 						//printf("rail (%d,%d) s'eteint...\n",x, y);
 						j->DesactiveRail(x, y);
@@ -2927,18 +2927,18 @@ int DoAnim (void *data)
 							j->DrawUs();
 					}
 					 */
-					if (n == 11 && j->t.a[x][y].t == j->a[n].n*j->a[n].t-1) //bombe a retardement
+					if (n == 11 && j->t.a[x][y].t == j->a[n].n*j->a[n].t-1) //time bomb
 					{
 						j->DoExplosif(x, y);
 					}
 					if (n == 28 && j->t.a[x][y].t == 3) //explosion
 					{
-						//verifie que cela nous tue
+						//verifies that kills us
 						j->DoBall(x, y);
 					}
-					if (n == 33 && j->t.a[x][y].t == 3) //centre de l'explosion d'une bombe
+					if (n == 33 && j->t.a[x][y].t == 3) //center of bomb explosion
 					{
-						//demarre les eventuels trucs situees a proximite
+						//starts eventual located stuff has close?? (demarre les eventuels trucs situees a proximite)
 						for (dx=-1;dx<=1;dx++)
 						{
 							for (dy=-1;dy<=1;dy++)
@@ -2969,13 +2969,13 @@ int DoAnim (void *data)
 						j->OpenPortes();
 					}
 					//printf("Animation %d : t = %d...\n",n,j->a[n].t);
-					if (j->t.a[x][y].t % j->a[n].t == 0 && j->a[n].n) //nouvelle image
+					if (j->t.a[x][y].t % j->a[n].t == 0 && j->a[n].n) //new image
 					{
 						j->t.t[x][y] = j->a[n].l[j->t.a[x][y].t / j->a[n].t];
 						j->Draw(x,y);
 						if (j->t.posx == x && j->t.posy == y)
 						{
-							if (n != 27 && (n != 18 || (n==18 && (Uint16)(j->t.a[x][y].t/j->a[n].t) == j->a[n].n-1))) //mort et materialisation
+							if (n != 27 && (n != 18 || (n==18 && (Uint16)(j->t.a[x][y].t/j->a[n].t) == j->a[n].n-1))) //death and new life
 								j->DrawUs();
 						}
 					}
@@ -2993,7 +2993,7 @@ int DoAnim (void *data)
 	return 0;
 }
 
-void Jeu::Anime (Uint16 x, Uint16 y, Uint16 n) //lance l'animation n en (x,y)
+void Jeu::Anime (Uint16 x, Uint16 y, Uint16 n) //start the animation n (x,y)
 {
 	//printf("Lancement de l'animation %d en (%d, %d) ...\n",n,x,y);
 	if (n >= NA)
@@ -3005,9 +3005,9 @@ void Jeu::Anime (Uint16 x, Uint16 y, Uint16 n) //lance l'animation n en (x,y)
 	//printf("temps %d\n",a[n].t);
 	if (a[n].s)
 	{
-		//verifie que l'on est pas trop loin pour l'entendre
+		//verifies that it is not too far away to hear
 		if ((x-t.posx)*(x-t.posx) + (y-t.posy)*(y-t.posy) < DHEAR2)
-			s.Play(a[n].s); //joue le son
+			s.Play(a[n].s); //plays the sound
 	}
 	if (t.a[x][y].n != 27)
 	{
