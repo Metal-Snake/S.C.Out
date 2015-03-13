@@ -3060,12 +3060,12 @@ inline void Jeu::Draw(Uint16 x, Uint16 y)
 	src.h = CY;
 	pos.x = x*CX;
 	pos.y = y*CY;
-	SDL_BlitSurface(im, &src, jeu, &pos); //sol
+	SDL_BlitSurface(im, &src, jeu, &pos); //ground
 	if (t.t[x][y]%10 >= 4 || t.t[x][y]/10 >= 4)
 	{
 		src.x = CX*(t.t[x][y]%10);
 		src.y = CY*(t.t[x][y]/10);
-		SDL_BlitSurface(im, &src, jeu, &pos); //case
+		SDL_BlitSurface(im, &src, jeu, &pos); //frame? (case)
 	}
 }
 
@@ -3082,7 +3082,7 @@ void Jeu::Draw()
 	DrawUs();
 }
 
-void Jeu::initRail (Uint16 x, Uint16 y, Uint16 time, Uint8 sens) //initialise le rail en (x,y) et les suivants (inutile)
+void Jeu::initRail (Uint16 x, Uint16 y, Uint16 time, Uint8 sens) //initializes the rail (x, y) and the following (useless)
 {
 	if (x >= DIMX || y >= DIMY)
 		return;
@@ -3107,14 +3107,14 @@ void Jeu::initRail (Uint16 x, Uint16 y, Uint16 time, Uint8 sens) //initialise le
 	}
 	 */
 	p = GetRailSens(t.t[x][y], sens);
-	t.a[x][y].n = 32; //rail vert qui s'allume
+	t.a[x][y].n = 32; //green rail that lights
 	t.a[x][y].t = time;
 	//printf("vers (%d,%d) ...\n",p.x,p.y);
 	
 	DesactiveRail(x, y);
 	if (!p.x && !p.y)
 	{
-		//printf("Mauvais sens !\n");
+		//printf("Wrong direction !\n");
 		return;
 	}
 	time -= TRAIL;
@@ -3138,7 +3138,7 @@ void Jeu::DesactiveRails ()
 	}
 }
 
-void Jeu::initTrain () //initialise les rails automatiques
+void Jeu::initTrain () //initiates automatic rails
 {
 	Uint16 x,y;
 	DesactiveRails();
@@ -3148,7 +3148,7 @@ void Jeu::initTrain () //initialise les rails automatiques
 		{
 			if (t.t[x][y] == 173) //pile infinie
 			{
-				//printf("Pile infinie trouvee en (%d,%d) ...\n",x,y);
+				//printf("Infinite stack has been found in (%d,%d) ...\n",x,y);
 				//initRail(x, y+1, 0, bas);
 				Anime(x, y, 42);
 			}
@@ -3168,18 +3168,18 @@ void Jeu::InitBalls ()
 void Jeu::init ()
 {
 	char tamp[256];
-	//initialisation de la SDL
+	//initialize SDL
 	//SDL_errorcode err;
 #if HSON
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO))
 	{
-		fprintf(stderr,"Initialisation de la SDL rate : %s\n",SDL_GetError());
+		fprintf(stderr,"Initialize SDL error : %s\n",SDL_GetError());
 		exit(EXIT_FAILURE);
 	}
 #else
 	if (SDL_Init(SDL_INIT_VIDEO))
 	{
-		fprintf(stderr,"Initialisation de la SDL rate : %s\n",SDL_GetError());
+		fprintf(stderr,"Initialize SDL error : %s\n",SDL_GetError());
 		exit(EXIT_FAILURE);
 	}
 #endif
@@ -3188,38 +3188,38 @@ void Jeu::init ()
 	//printf("Initialise TTF...\n");
 	if (TTF_Init() < 0)
 	{
-		fprintf(stderr,"Initialisation de TTF rate !!!\n");
+		fprintf(stderr,"Initialize TTF error !!!\n");
 		exit(EXIT_FAILURE);
 	}
-	//printf("Chargement de la police...\n");
+	//printf("Loading the police...\n");
 	MakeName("arial.ttf", tamp);
 	police = TTF_OpenFont(tamp, 20);
 	if (!police)
 	{
-		printf("Police introuvable !\n");
+		printf("Police found !\n");
 		exit(EXIT_FAILURE);
 	}
 #endif
-	//ouverture de la fenetre
+	//Opening the window
 	ecran = SDL_SetVideoMode(SCREENX, SCREENY, 32, SDL_HWSURFACE);
     if (ecran == NULL)
     {
-        fprintf(stderr, "Impossible de charger le mode video : %s\nq", SDL_GetError());
+        fprintf(stderr, "Unable to load video mode : %s\nq", SDL_GetError());
         exit(EXIT_FAILURE);
     }
 #if HSON
-	//initialise le son
+	//initialize sound
 	s.Init();
 #endif
-	//charge les images du jeu
+	//Loads game images
 	MakeName("images.bmp", tamp);
 	im = SDL_LoadBMP(tamp);
 	if (!im)
 	{
-		fprintf(stderr,"Erreur : chargement des images du jeu impossible !\n");
+		fprintf(stderr,"Error : Game images missing !\n");
 	}
-	SDL_SetColorKey(im, SDL_SRCCOLORKEY, SDL_MapRGB(im->format, 0, 0, 255)); //transparence
-	//initialise le champ de vision
+	SDL_SetColorKey(im, SDL_SRCCOLORKEY, SDL_MapRGB(im->format, 0, 0, 255)); //transparency
+	//initialize field of view
 	vue.x = 0;
 	vue.y = 0;
 	vue.w = NX*CX;
@@ -3231,28 +3231,28 @@ void Jeu::init ()
 	moveus = false;
 	canmove = false;
 	paused = false;
-	//cree l'image du tableau complet
+	//created the image of the complete picture? (cree l'image du tableau complet)
 	jeu = SDL_CreateRGBSurface(SDL_HWSURFACE, CX*DIMX, CY*DIMY, 32, 0, 0, 0, 0);
 	if (!jeu)
 	{
-		fprintf(stderr, "Impossible de creer la surface de jeu !\n");
+		fprintf(stderr, "Unable to create the playing surface !\n");
 	}
 	//cree l'image d'une case
 	ic = SDL_CreateRGBSurface(SDL_HWSURFACE, CX, CY, 32, 0, 0, 0, 0);
 	if (!ic)
 	{
-		fprintf(stderr, "Impossible de creer la surface d'une case !\n");
+		fprintf(stderr, "Unable to create the surface of a box !\n");
 	}
-	//charge les regles
+	//load the rules
 	LoadRegles(r);
-	//charge les animations
-	//printf("Chargement des animations...\n");
+	//load animations
+	//printf("Loading animations...\n");
 	LoadAnims(a);
-	//initialise les balles
+	//initialize bullets
 	InitBalls();
-	//initialise le point de reapparition
+	//initializes the point of reappearance
 	t.sx = t.sy = 0;
-	//initialise les touches de control
+	//initializes the control buttons
 	key[tgauche] = SDLK_LEFT;
 	key[tdroite] = SDLK_RIGHT;
 	key[thaut] = SDLK_UP;
@@ -3261,9 +3261,9 @@ void Jeu::init ()
 	key[tprendre] = SDLK_SPACE;
 	key[tteleporter] = SDLK_SPACE;
 	key[tsuicide] = SDLK_s;
-	//charge les preferences (s'il y en a)
+	//load preferences (if any)
 	LoadPrefs();
-	//initialise des donnes utilisees par l'editeur pour ameliorer
+	//initialize the data used by the author to improve? (initialise des donnes utilisees par l'editeur pour ameliorer)
 	w[0].init(0);
 	w[1].init(1);
 	w[2].init(2);
@@ -3271,20 +3271,20 @@ void Jeu::init ()
 
 void Jeu::end ()
 {
-	//libere l'image de la case
+	//frees the image of the box
 	SDL_FreeSurface(ic);
-	//libere l'image du tableau complet
+	//frees the images of the complete picture
 	SDL_FreeSurface(jeu);
-	//libere les images du jeu
+	//frees images of the game
 	SDL_FreeSurface(im);
-	//stop le son
+	//stop sound
 	s.Stop();
 #if TTF
-	//fin de ttf
+	//close ttf
 	TTF_CloseFont(police);
 	TTF_Quit();
 #endif
-	//Arret de la SDL
+	//stop SDL
 	SDL_Quit();
 }
 
@@ -3336,7 +3336,7 @@ void Jeu::Update_tsens ()
 				break;
 		}
 	}else
-		t.tsens = t.sens; //si pas missile
+		t.tsens = t.sens; //if no misslge
 }
 
 Uint8 GetSens (int dx, int dy)
@@ -3359,7 +3359,7 @@ void Jeu::MoveUs (Uint8 sens)
 	Uint16 c = t.t[t.posx][t.posy];
 	if (r[c].is(rail_actif))
 	{
-		//printf("Rail actif !\n");
+		//printf("Rail active !\n");
 		train = true;
 		Pos p = GetRailSens(c, sens);
 		dx = p.x;
@@ -3368,37 +3368,37 @@ void Jeu::MoveUs (Uint8 sens)
 			return;
 		sens = GetSens(dx, dy);
 		DesactiveRail(t.posx, t.posy);
-		//printf("Deplacement vers (%d,%d) ...\n",dx,dy);
+		//printf("Move to (%d,%d) ...\n",dx,dy);
 	}else
 	{
 		dx = deplx(sens);
 		dy = deply(sens);
 	}
-	//met a jour notre sens
+	//update direction
 	t.sens = sens;
 	Update_tsens ();
-	//verifie que l'on peut avancer
+	//check if we can move forward
 	if (t.posx+dx < 0 || t.posx+dx >= DIMX || t.posy+dy < 0 || t.posy+dy >=DIMY)
 		return;
 	c = t.t[t.posx+dx][t.posy+dy];
 	if (r[c].is(mur))
 	{
-		if (r[c].is(porte)) //ouverture d'un sens unic
+		if (r[c].is(porte)) //opening one way direction? (ouverture d'un sens unic)
 		{
 			if ((sens == bas && c == 81) || (sens == haut && c == 82) || (sens == gauche && c == 83) || (sens == droite && c == 84))
 			{
 				DoPorte(t.posx+dx, t.posy+dy);
-				//printf("ouverture d'un sens unic en (%d,%d)\n",t.posx+dx, t.posy+dy);
+				//printf("Opening one way direction (%d,%d)\n",t.posx+dx, t.posy+dy);
 			}
 		}
 		if (!train || !r[c].is(rail))
 			return;
 	}
 	if (r[t.t[t.posx][t.posy]].is(porte_ouverte))
-	{//fermeture d'un sens unic
-		t.t[t.posx][t.posy] = 80 + (t.t[t.posx][t.posy]%10); //ferme le sens unic
+	{//close a one way direction
+		t.t[t.posx][t.posy] = 80 + (t.t[t.posx][t.posy]%10); //??? (ferme le sens unic)
 	}
-	//ferme les sens unic a proximite
+	//closes one way direction?? (ferme les sens unic a proximite)
 	int dx2,dy2;
 	Uint32 x2,y2;
 	for (dx2 = -1;dx2<=1;dx2++)
@@ -3411,22 +3411,22 @@ void Jeu::MoveUs (Uint8 sens)
 				y2 = (Uint16)(t.posy+dy2);
 				if (x2 < DIMX && y2 < DIMY)
 				{
-					if (r[t.t[x2][y2]].is(porte_))//|| (t.a[x2][y2].n >= 1 && t.a[x2][y2].n <= 4)) //sens unique ouvert ou qui s'ouvre
+					if (r[t.t[x2][y2]].is(porte_))//|| (t.a[x2][y2].n >= 1 && t.a[x2][y2].n <= 4)) //open one way direction
 					{
-						t.t[x2][y2] = 80 + (t.t[x2][y2]%10); //ferme le sens unic
+						t.t[x2][y2] = 80 + (t.t[x2][y2]%10); //??? (ferme le sens unic)
 						t.a[x2][y2].n = 0;
 						Draw(x2, y2);
-						//printf("fermeture du sens unic en (%d, %d) !\n",x2,y2);
+						//printf("closing one way direction (%d, %d) !\n",x2,y2);
 					}
 				}
 			}
 		}
 	}
-	//met à jour le champ de vue
+	//update the field of view
 	UpdateVue(t.posx+dx, t.posy+dy);
 	s.Play(2); //son du deplacement
-	Draw(t.posx, t.posy); //on s'efface
-	//animation du deplacement
+	Draw(t.posx, t.posy); //on clear? (on s'efface)
+	//movement animation
 	int i;
 	SDL_Rect src, pos, rc;
 	rc.x = 0;
@@ -3463,12 +3463,12 @@ void Jeu::MoveUs (Uint8 sens)
 		if (t.a[t.posx+dx][t.posy+dy].n)
 			Draw(t.posx+dx, t.posy+dy);
 		
-		SDL_BlitSurface(jeu, &pos, ic, &rc); //retient ce qui est en dessous
-		SDL_BlitSurface(im, &src, jeu, &pos); //et nous dessine
+		SDL_BlitSurface(jeu, &pos, ic, &rc); //retains what is below
+		SDL_BlitSurface(im, &src, jeu, &pos); //and draws us
 		/*
 		if (!dovuerun)
 		{
-			Update(); //mis a jour
+			Update(); //updated
 		}
 		 */
 		//
@@ -3482,7 +3482,7 @@ void Jeu::MoveUs (Uint8 sens)
 		//
 		rc.w = CX;
 		rc.h = CY;
-		SDL_BlitSurface(ic, &rc, jeu, &pos); //restitue
+		SDL_BlitSurface(ic, &rc, jeu, &pos); //returns
 		if (train)
 		{
 			SDL_PollEvent(&event);
@@ -3490,32 +3490,32 @@ void Jeu::MoveUs (Uint8 sens)
 			keystate = SDL_GetKeyState (NULL);
 			if (keystate[key[thaut]])
 			{
-				//printf("haut !!!\n");
+				//printf("top !!!\n");
 				dy2 = -1;
 			}
 			if (keystate[key[tbas]])
 			{
-				//printf("bas !!!\n");
+				//printf("down !!!\n");
 				dy2 = 1;
 			}
 			if (keystate[key[tdroite]])
 			{
-				//printf("droite !!!\n");
+				//printf("right !!!\n");
 				dx2 = 1;
 			}
 			if (keystate[key[tgauche]])
 			{
-				//printf("gauche !!!\n");
+				//printf("left !!!\n");
 				dx2 = -1;
 			}
 		}
 	}
-	//on bouge jusqu'a notre position finale
+	//we move up our final position
 	t.posx += dx;
 	t.posy += dy;
 	pr.x = 0;
 	pr.y = 0;
-	//gere l'acceleration
+	//manages the accleration
 	if (tNMUS)
 	{
 		tNMUS--;
@@ -3524,13 +3524,13 @@ void Jeu::MoveUs (Uint8 sens)
 			NMUS = NMUS0;
 		}
 	}
-	//demarre les objets qui réagissent quand on passe dessus
+	//Starts objects that react when over (demarre les objets qui réagissent quand on passe dessus)
 	if (r[c].is(react_on)) // || r[t.sol[t.posx][t.posy]].is(react_on))
 	{
 		//printf("react_on...\n");
 		ReactOn(t.posx, t.posy);
 	}
-	//demarre les trucs situees a proximite
+	//starts nearby stuff
 	for (dx=-1;dx<=1;dx++)
 	{
 		for (dy=-1;dy<=1;dy++)
@@ -3548,19 +3548,19 @@ void Jeu::MoveUs (Uint8 sens)
 	{
 		if (dx2 != 0 || dy2 != 0)
 		{
-			//printf("Tu veux sortir vers (%d,%d) ?\n",dx2,dy2);
+			//printf("You want to get out (%d,%d) ?\n",dx2,dy2);
 			if (!r[c].is(rail_mur))
 			{
-				//printf(" ...le rail le permet...\n");
+				//printf(" ...track permits...\n");
 				if ((int)t.posx+dx2 >= 0 && t.posx+dx2 < DIMX && (int)t.posy+dy2 >= 0 && t.posy+dy2 < DIMY)
 				{
-					//printf("... tu ne sort pas de l'ecran...\n");
+					//printf("... you do not come out of the screen...\n");
 					c = t.t[t.posx+dx2][t.posy+dy2];
 					if (!r[c].is(mur))
 					{
-						//printf("...pas de mur...\n");
-						//printf(" ...alors sort !!!\n");
-						DesactiveRail (t.posx, t.posy); //pour etre sur...
+						//printf("...no wall...\n");
+						//printf(" ...pulls out !!!\n");
+						DesactiveRail (t.posx, t.posy); //to be on...
 						MoveUs(GetSens(dx2, dy2));
 						return;
 					}
@@ -3775,7 +3775,7 @@ void Jeu::Play (Uint32 niveau)
 	pr.x = 0;
 	pr.y = 0;
 	
-	StartVue(); //place le champ de vision où il faut
+	StartVue(); //place field of view where it is necessary?? (place le champ de vision où il faut)
 	Draw();
 	//Update();
 	
@@ -3788,9 +3788,9 @@ void Jeu::Play (Uint32 niveau)
 	t.tsens = t.sens;
 	invincible = 0;
 	
-	//lance le thread chargé des animations
+	//start thread for animations
 	SDL_Thread *tanim = SDL_CreateThread(DoAnim, this);
-	//lance le thread chargé des balles
+	//start thread for bulles
 	SDL_Thread *tballs = SDL_CreateThread(DoBalls, this);
 	
 	SDL_PumpEvents();
@@ -3856,7 +3856,7 @@ void Jeu::Play (Uint32 niveau)
 							Load(niveau);
 							pr.x = 0;
 							pr.y = 0;
-							StartVue(); //place le champ de vision où il faut
+							StartVue(); //instead the field of view where it is necessary?? (place le champ de vision où il faut)
 							Draw();
 							break;
 						case SDLK_l:
@@ -3866,7 +3866,7 @@ void Jeu::Play (Uint32 niveau)
 							Load(niveau);
 							pr.x = 0;
 							pr.y = 0;
-							StartVue(); //place le champ de vision où il faut
+							StartVue(); //instead the field of view where it is necessary? (place le champ de vision où il faut)
 							Draw();
 							break;
 						case SDLK_o:
@@ -3875,7 +3875,7 @@ void Jeu::Play (Uint32 niveau)
 							Load(niveau);
 							pr.x = 0;
 							pr.y = 0;
-							StartVue(); //place le champ de vision où il faut
+							StartVue(); //instead the field of view where it is necessary?? (place le champ de vision où il faut)
 							Draw();
 							break;
 #endif
@@ -3899,19 +3899,19 @@ void Jeu::Play (Uint32 niveau)
 										cpt++;
 								}
 							}
-							printf("Nombre de piles infinies : %d\n",cpt);
+							printf("Infinite number of batteries : %d\n",cpt);
 							break;
 					}
 					if (event.key.keysym.sym == key[tteleporter])
 					{
-						if (r[t.t[t.posx][t.posy]].is(teleporteur)) //teleporteur
+						if (r[t.t[t.posx][t.posy]].is(teleporteur)) //teleporter
 						{
 							Teleporte(t.t[t.posx][t.posy]);
 						}
 					}
 					if (event.key.keysym.sym == key[ttirer])
 					{
-						if (r[t.objet].is(missile)) //tir de missile
+						if (r[t.objet].is(missile)) //firing missle
 						{
 							int dx,dy;
 							dx = dy = 0;
@@ -3931,17 +3931,17 @@ void Jeu::Play (Uint32 niveau)
 							DrawUs();
 						}
 					}
-					if (event.key.keysym.sym == key[tprendre]) //prendre un objet
+					if (event.key.keysym.sym == key[tprendre]) //take an object
 					{
 						if (r[t.t[t.posx][t.posy]].is(objet))
 						{
 							if (t.objet)
-							{//echange les deux objets
+							{//exchange two objects
 								Uint16 tamp = t.objet;
 								t.objet = t.t[t.posx][t.posy];
 								t.t[t.posx][t.posy] = tamp;
 							}else
-							{//prend l'objet
+							{//takes the object
 								t.objet = t.t[t.posx][t.posy];
 								t.t[t.posx][t.posy] = 0;
 								CloseBarriere();
@@ -3964,7 +3964,7 @@ void Jeu::Play (Uint32 niveau)
 								}
 							}else
 							{
-								if (t.t[t.posx][t.posy] == 150 && t.objet == 140) //serrure && cle
+								if (t.t[t.posx][t.posy] == 150 && t.objet == 140) //lock && key?? (serrure && cle)
 								{
 									t.objet = 0;
 									Anime(t.posx, t.posy, 30);
@@ -4009,38 +4009,38 @@ void Jeu::Play (Uint32 niveau)
 		}
 	}while(!quit);
 	
-	printf("fin de la partie...\n");
+	printf("end of game...\n");
 	
 	switch(win)
 	{
 		case perdu:
-			printf("Tu es mort !\n");
-			printf("pause de 2 sec...\n");
+			printf("You died !\n");
+			printf("pause 2 sec...\n");
 			pause(2000);
 			s.Play(23);
-			printf("pause de 3 sec...\n");
+			printf("pause 3 sec...\n");
 			pause(3000);
 			break;
 		case gagne:
-			printf("Gagne !\n");
-			printf("pause de 2 sec...\n");
+			printf("You won !\n");
+			printf("pause 2 sec...\n");
 			pause(2000);
 			s.Play(22);
-			printf("pause de 3 sec...\n");
+			printf("pause 3 sec...\n");
 			pause(3000);
 			break;
 	}
 	
-	printf("fin des threads ...\n");
+	printf("terminate thread ...\n");
 	
-	//fait quitter le thread chargé des animations
+	//quit thread for animations
 	quitanim = true;
-	pause(10*max(TANIM,max(TVUE,TBALLS))); //laisse le temps au thread de s'arreter
+	pause(10*max(TANIM,max(TVUE,TBALLS))); //wait a bit to allow the thread to stop
 	SDL_PumpEvents();
 	
 	if (win != perdu)
 	{
-		t.sx = t.sy = 0; //reinitialise l'endroit d'apparition
+		t.sx = t.sy = 0; //resets place of occurrence
 	}
 	printf("fin de Play !\n");
 }
@@ -4048,11 +4048,11 @@ void Jeu::Play (Uint32 niveau)
 int main(int argc, char *argv[])
 {
 	Jeu j;
-	//initialisation du jeu
+	//Initalize the game
 	j.init();
-	//lancement de la fenetre principale
+	//launch the main window
 	j.Main();
-	//fin du jeu
+	//quit the game
 	j.end();
 	return EXIT_SUCCESS;
 }
