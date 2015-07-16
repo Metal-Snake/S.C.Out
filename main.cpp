@@ -21,8 +21,8 @@
 #include <unistd.h>
 
 #if MAC
-const char *RESOURCES = "S.C.Out.app/Contents/Resources/"; //resource folder in Mac apps
-const char *DSONS = ""; //sounds folder
+const char *RESOURCES = ""; //resource folder in Mac apps
+const char *DSONS = "Sons/"; //sounds folder
 const char *TAB = "Tableaux/"; //tables folder
 #import <Cocoa/Cocoa.h>
 #import <SDL/SDL.h>
