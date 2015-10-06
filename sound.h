@@ -31,36 +31,7 @@ Son LoadSon (const char *file)
 		exit(EXIT_FAILURE);
 	}
 	
-	/* conversion du son 
-	int ret;
-	ret = SDL_BuildAudioCVT(&wav_cvt,
-							wav_spec.format, wav_spec.channels, wav_spec.freq,
-							des.format, des.channels, des.freq);
-	
-	if (ret == -1)
-	{
-		fprintf(stderr,"Impossible de convertir le son : %s\n",SDL_GetError());
-		exit(EXIT_FAILURE);
-	}
-	
-	// Setup for conversion
-	wav_cvt.buf=(Uint8 *)malloc(wav_length*wav_cvt.len_mult);
-	wav_cvt.len=wav_length;
-	memcpy(wav_cvt.buf, wav_buff, wav_length);
-	
-	// We can delete to original WAV data now
-	SDL_FreeWAV(wav_buff);
-	
-	// And now we're ready to convert
-	if (SDL_ConvertAudio(&wav_cvt))
-	{
-		fprintf(stderr,"Erreur pendant la conversion !\n");
-	}
-	/**/
-	
 	Son s;
-	
-	//printf("%s : taille = %d, freq = %d\n",file,wav_length,wav_spec.freq);
 	
 	if (wav_spec.freq == 5525)
 	{
