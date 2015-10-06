@@ -1,7 +1,7 @@
 
-#define NA	50	//nombre max. d'animations
+#define NA	50	//max number of animations? (nombre max. d'animations)
 
-#define NIM	20 //nombre max. d'images dans une animation
+#define NIM	20 //max number of frames in an animation? (nombre max. d'images dans une animation)
 
 struct Anim
 {
