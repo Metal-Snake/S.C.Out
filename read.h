@@ -15,19 +15,20 @@ void MakeName (const char *txt, char *res)
 void MakeNameS (const char *txt, char *res)
 {
 	Uint16 i;
-	for (i=0;i<strlen(DSONS);i++)
+	for (i=0;i<strlen(SOUNDS_DIRECTORY);i++)
 	{
-		res[i] = DSONS[i];
+		res[i] = SOUNDS_DIRECTORY[i];
 	}
-	for (i=strlen(DSONS);i<=strlen(DSONS)+strlen(txt);i++)
+	for (i=strlen(SOUNDS_DIRECTORY);i<=strlen(SOUNDS_DIRECTORY)+strlen(txt);i++)
 	{
-		res[i] = txt[i-strlen(DSONS)];
+		res[i] = txt[i-strlen(SOUNDS_DIRECTORY)];
 	}
 	//printf("Nom obtenu : %s + %s = %s\n",RESOURCES, txt, res);
 }
 
 void MakeNameTAB (const char *txt, char *res)
 {
+	printf("MakeNameTAB %s %s", txt, res);
 	Uint16 i;
 	for (i=0;i<strlen(TAB);i++)
 	{

@@ -1,16 +1,15 @@
-bool SON = true;
+bool SOUND = true;
 
 #define NSONSM	26 //max number of sounds to load in memory
 #define NSONS 32 //number of sounds that can be simultaneously played
 
-struct Son
-{
+typedef struct {
 	Uint8 *data;
 	Uint32 size;
-};
-typedef struct Son Son;
+}Sound;
 
-Son LoadSon (const char *file)
+
+Sound LoadSound (const char *file)
 {
 	SDL_AudioSpec wav_spec;
 	Uint32 wav_length;
@@ -31,7 +30,7 @@ Son LoadSon (const char *file)
 		exit(EXIT_FAILURE);
 	}
 	
-	Son s;
+	Sound s;
 	
 	if (wav_spec.freq == 5525)
 	{
@@ -80,19 +79,19 @@ Son LoadSon (const char *file)
 	return s;
 }
 
-struct RefSon
+struct RefSound
 {
 	Uint8 *ptr; //la ou on en est (NULL si son pas lu)
 	Uint32 i; //sound index
 };
-typedef struct RefSon RefSon;
+typedef struct RefSound RefSound;
 
 void mixaudio(void *unused, Uint8 *stream, int len);
 
-struct Sons
+struct Sounds
 {
-	Son s[NSONSM];
-	RefSon r[NSONS];
+	Sound s[NSONSM];
+	RefSound r[NSONS];
 	
 	//
 	void Init (); //initializes everything (and load sounds)
@@ -104,17 +103,17 @@ struct Sons
 	void Play (Uint16 i); //plays the i-th sound
 };
 
-void Sons::Init ()
+void Sounds::Init ()
 {
 	init(); //
 	Start(); //
 	Load(); //
 }
-void Sons::Load (const char *file, Uint16 i)
+void Sounds::Load (const char *file, Uint16 i)
 {
-	s[i] = LoadSon(file);
+	s[i] = LoadSound(file);
 }
-void Sons::Load ()
+void Sounds::Load ()
 {
 	int i;
 	char file[256];
@@ -122,13 +121,13 @@ void Sons::Load ()
 	MakeNameS("son00.wav", file);
 	for (i=1;i<NSONSM;i++)
 	{
-		file[strlen(DSONS)+3] = '0'+i/10;
-		file[strlen(DSONS)+4] = '0'+i%10;
+		file[strlen(SOUNDS_DIRECTORY)+3] = '0'+i/10;
+		file[strlen(SOUNDS_DIRECTORY)+4] = '0'+i%10;
 		MakeName(file, tamp);
 		Load(tamp, i);
 	}
 }
-void Sons::init ()
+void Sounds::init ()
 {
 	int i;
 	for (i=0;i<NSONSM;i++)
@@ -142,7 +141,7 @@ void Sons::init ()
 		r[i].i = 0;
 	}
 }
-void Sons::Start ()
+void Sounds::Start ()
 {
 	init();
 	SDL_AudioSpec des,obt;
@@ -154,12 +153,12 @@ void Sons::Start ()
 	des.userdata = this;
 	if (SDL_OpenAudio(&des,&obt) < 0)
 	{
-		printf("Impossible d'ouvrir l'audio : %s\n",SDL_GetError());
+		printf("Unable to open Audio : %s\n",SDL_GetError());
 		exit(EXIT_FAILURE);
 	}
 	if (obt.freq != des.freq)
 	{
-		printf("Frequence desiree non obtenue !!!!\n");
+		printf("Frequency not reached !!!!\n");
 	}
 	/*
 	printf("Audio obtenu:\n");
@@ -181,14 +180,14 @@ void Sons::Start ()
 	//lancement du son
 	SDL_PauseAudio(0);
 }
-void Sons::Stop ()
+void Sounds::Stop ()
 {
 	 SDL_CloseAudio();
 }
-void Sons::Play (Uint16 i) //plays the i-th sound
+void Sounds::Play (Uint16 i) //plays the i-th sound
 {
 #if HSON
-	if (!SON)
+	if (!SOUND)
 		return;
 #else
 	return;
@@ -206,7 +205,7 @@ void Sons::Play (Uint16 i) //plays the i-th sound
 	for (j=0;j<NSONS;j++)
 	{
 		if (r[j].ptr == NULL)
-		{ //lance le son
+		{ //starts sounds
 			//printf("Launch of %d in %d ...\n",i,j);
 			r[j].ptr = s[i].data;
 			r[j].i = i;
@@ -220,7 +219,7 @@ void mixaudio(void *userdata, Uint8 *stream, int len)
 {
 	int i;
 	Uint32 amount;
-	Sons *s = (Sons *)userdata;
+	Sounds *s = (Sounds *)userdata;
 	for (i=0;i<NSONS;i++)
 	{
 		if (s->r[i].ptr != NULL)

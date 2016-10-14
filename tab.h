@@ -3,13 +3,13 @@
 
 #define TRAIL	5 //time between a displacement of a box to another green (useless)
 
-//sens possibles
+//possible directions
 enum
 {
-	gauche = 0,
-	haut = 1,
-	droite = 2,
-	bas = 3
+	left = 0,
+	up = 1,
+	right = 2,
+	down = 3
 };
 
 struct InfoAnim
