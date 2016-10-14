@@ -1,5 +1,6 @@
 # S.C.Out
 Old arcade/strategy game http://en.wikipedia.org/wiki/S.C.OUT 
+
 Original sourcecode: http://mercat.jean.free.fr/S.C.Out/
 
 # About this project
