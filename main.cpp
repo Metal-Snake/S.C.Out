@@ -49,11 +49,11 @@ const char *TAB = "Tableaux/"; //tables folder
 bool ROUGE = true;
 
 #if FINAL && !EDIT
-#define SCREENX 512 //1280 //640 //window dimensions
-#define SCREENY	380 //800 //480
+#define SCREENX 640 //1280 //640 //window dimensions
+#define SCREENY	480 //800 //480
 
-#define NX	10 //40 //10 //10 //number of visible boxes
-#define NY	8 //24 //8 //8
+#define NX	14 //40 //10 //10 //number of visible boxes
+#define NY	10 //24 //8 //8
 #else
 #define SCREENX 1280 //640 //window dimensions
 #define SCREENY	800 //480
