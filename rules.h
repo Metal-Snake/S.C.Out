@@ -116,13 +116,14 @@ Uint32 getdefnum (const char *word)
 
 void LoadRegles (Regles *r)
 {
+	printf("Load Rules");
 	int i;
 	for (i=0;i<NI;i++)
 	{
 		r[i].init();
 	}
 	char tamp[256];
-	MakeName("regles.txt", tamp);
+	MakeName("rules.txt", tamp);
 	FILE *f = fopen(tamp,"r");
 	if (!f)
 	{

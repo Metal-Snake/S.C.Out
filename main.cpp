@@ -41,7 +41,7 @@ const char *TAB = "Tableaux/"; //tables folder
 #include "read.h"
 #include "sound.h"
 #include "tab.h"
-#include "regles.h"
+#include "rules.h"
 #include "anims.h"
 
 #define FINAL	true
