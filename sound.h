@@ -1,7 +1,7 @@
 bool SON = true;
 
-#define NSONSM	26 //nombre de sons max charges en memoire
-#define NSONS 32 //nombre de sons pouvant etre joues simultanement
+#define NSONSM	26 //max number of sounds to load in memory
+#define NSONS 32 //number of sounds that can be simultaneously played
 
 struct Son
 {
@@ -27,7 +27,7 @@ Son LoadSon (const char *file)
 	
 	if(SDL_LoadWAV(file, &wav_spec, &wav_buff, &wav_length) == NULL)
 	{
-		fprintf(stderr, "Impossible d'ouvrir %s : %s\n", file, SDL_GetError());
+		fprintf(stderr, "Unable to open %s : %s\n", file, SDL_GetError());
 		exit(EXIT_FAILURE);
 	}
 	
@@ -71,19 +71,19 @@ Son LoadSon (const char *file)
 	
 	if (!s.data)
 	{
-		fprintf(stderr,"Erreur : pas de son apres conversion !!!\n");
+		fprintf(stderr,"Error : No sound after conversion !!!\n");
 	}
 	
 	s.size = wav_length; //wav_cvt.len_cvt;
-	//printf("Taille du son : avant %d, apres %d\n",wav_cvt.len,s.size);
-	//printf("Taille du son : %d\n",wav_length);
+	//printf("Size of sound : avant %d, apres %d\n",wav_cvt.len,s.size);
+	//printf("Size of sound : %d\n",wav_length);
 	return s;
 }
 
 struct RefSon
 {
 	Uint8 *ptr; //la ou on en est (NULL si son pas lu)
-	Uint32 i; //indice du son
+	Uint32 i; //sound index
 };
 typedef struct RefSon RefSon;
 
@@ -95,20 +95,20 @@ struct Sons
 	RefSon r[NSONS];
 	
 	//
-	void Init (); //initialise tout (et charge les sons)
-	void Load (); //charge tous les sons
-	void Load (const char *file, Uint16 i); //charge le i-eme son (necessairement un .wav)
-	void init (); //initialise la structure
-	void Start (); //demarre le systeme de son
-	void Stop (); //arret du systeme de son
-	void Play (Uint16 i); //joue le i-eme son
+	void Init (); //initializes everything (and load sounds)
+	void Load (); //load all sounds
+	void Load (const char *file, Uint16 i); //Load the i-th sound (needs to be .wav)
+	void init (); //initializes the structure
+	void Start (); //starts the sound system
+	void Stop (); //stops the sound system
+	void Play (Uint16 i); //plays the i-th sound
 };
 
 void Sons::Init ()
 {
-	init(); //initialise la structure
-	Start(); //demarre le systeme de son
-	Load(); //charge tous es sons
+	init(); //
+	Start(); //
+	Load(); //
 }
 void Sons::Load (const char *file, Uint16 i)
 {
@@ -185,7 +185,7 @@ void Sons::Stop ()
 {
 	 SDL_CloseAudio();
 }
-void Sons::Play (Uint16 i) //joue le i-eme son
+void Sons::Play (Uint16 i) //plays the i-th sound
 {
 #if HSON
 	if (!SON)
@@ -197,17 +197,17 @@ void Sons::Play (Uint16 i) //joue le i-eme son
 		return;
 	if (i >= NSONSM)
 	{
-		fprintf(stderr, "Ce son n'existe pas !!!\n");
+		fprintf(stderr, "Sound file doesn't exist !!!\n");
 		return;
 	}
-	//cherche un emplacement libre
+	//looking for a free slot
 	///SDL_LockAudio();
 	int j;
 	for (j=0;j<NSONS;j++)
 	{
 		if (r[j].ptr == NULL)
 		{ //lance le son
-			//printf("Lancement du son %d en %d ...\n",i,j);
+			//printf("Launch of %d in %d ...\n",i,j);
 			r[j].ptr = s[i].data;
 			r[j].i = i;
 			break;
@@ -226,7 +226,7 @@ void mixaudio(void *userdata, Uint8 *stream, int len)
 		if (s->r[i].ptr != NULL)
 		{
 			//printf("son %d...\n",i);
-			amount = s->s[s->r[i].i].size - (s->r[i].ptr - s->s[s->r[i].i].data); //quantite de son restant a jouer
+			amount = s->s[s->r[i].i].size - (s->r[i].ptr - s->s[s->r[i].i].data); //amount of remaining to play
 			if ( amount > len )
 			{
 				amount = len;

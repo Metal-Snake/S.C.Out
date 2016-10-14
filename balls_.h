@@ -1,11 +1,11 @@
 
-#define NBMAX	100 //nombre de balles maximum
+#define NBMAX	100 //maximum bullets
 
 struct Ball
 {
 	Uint16 x,y; //position
 	//SDL_Surface s;
-	bool used; //la balle est-elle active ?
+	bool used; //Is the bullet active?
 	
 	void Do ();
 };

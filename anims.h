@@ -5,10 +5,10 @@
 
 struct Anim
 {
-	Uint16 l[NIM];	//liste des images
-	Uint16 n;	//nombre d'images
-	Uint32	t; //temps entre deux images
-	Uint16	s; //son
+	Uint16 l[NIM];	//list of images
+	Uint16 n;	//number of frames
+	Uint32	t; //time between two images
+	Uint16	s; //sound
 	
 	void init ();
 };
@@ -33,13 +33,13 @@ void LoadAnims (Anim *a)
 	FILE *f = fopen(tamp,"r");
 	if (!f)
 	{
-		fprintf(stderr, "Impossible de charger les animations !!!\n");
+		fprintf(stderr, "Unable to load animations !!!\n");
 		return;
 	}
 	
 	const char *ptr, *ptr2;
-	int n = -1; //numero de l'animation
-	Uint16 k; //numéro d'image
+	int n = -1; //number of animations
+	Uint16 k; //image number
 		
 	for (i=0;;i++)
 	{
@@ -51,7 +51,7 @@ void LoadAnims (Anim *a)
 		}
 		//printf(tamp);
 		//printf("\n");
-		ptr = findstart(tamp, &n, 256); //regarde s'il y a le debut d'une nouvelle animation
+		ptr = findstart(tamp, &n, 256); //look if there is the beginning of a new animation
 		if (ptr == NULL)
 			ptr = tamp;
 		else
@@ -60,12 +60,12 @@ void LoadAnims (Anim *a)
 		}
 		if (n >= NA)
 		{
-			fprintf(stderr, "Erreur : animation d'indice trop grand (%d) !!!\n",n);
+			fprintf(stderr, "Error : animation too big (%d) !!!\n",n);
 			return;
 		}
 		if (n != -1)
 		{
-			for(;;) //cherche toutes les images de l'animation
+			for(;;) //seeks all animation images 
 			{
 				ptr2 = findnum (ptr, &k);
 				if (!ptr2)
@@ -73,8 +73,8 @@ void LoadAnims (Anim *a)
 					break;
 				}
 				ptr = ptr2;
-				//printf("nombre trouve : %d\n",k);
-				//ajoute l'image a la suite
+				//printf("number is : %d\n",k);
+				//adds the image later
 				if (k < NI)
 				{
 					if (a[n].n < NIM)
@@ -82,41 +82,41 @@ void LoadAnims (Anim *a)
 						a[n].l[a[n].n] = k;
 						a[n].n++;
 					}else
-						fprintf(stderr, "Erreur : trop d'images pour l'animation %d !\n",n);
+						fprintf(stderr, "Error : too many images for animation %d !\n",n);
 				}else
 				{
-					fprintf(stderr, "Erreur : limage %d de l'animation %d (%d) n'existe pas !!!\n",a[n].n,n,k);
+					fprintf(stderr, "Erreur : Image %d of animation %d (%d) doesn't exist !!!\n",a[n].n,n,k);
 				}
 			}
-			//passe les espaces
+			//Password spaces
 			ptr = pass(ptr);
 			if (*ptr == ':')
 			{
 				ptr++;
-				//lit le temps entre deux images
+				//wait time between two images
 				Uint16 t2;
-				a[n].t = 1; //temps par defaut
+				a[n].t = 1; //timer default
 				ptr2 = findnum(ptr, &t2);
 				if (ptr2)
 				{
 					ptr = ptr2;
 					a[n].t = t2;
-					//printf("temps entre deux images : %d\n",t2);
+					//printf("time between two images : %d\n",t2);
 				}
 			}
-			//passe les espaces
+			//Password spaces
 			ptr = pass(ptr);
 			if (*ptr == ':')
 			{
 				ptr++;
-				//lit le numero du son
+				//reads the number of sounds
 				Uint16 s2;
 				ptr2 = findnum(ptr, &s2);
 				if (ptr2)
 				{
 					ptr = ptr2;
 					a[n].s = s2;
-					//printf("son : %d\n",s2);
+					//printf("sound : %d\n",s2);
 				}
 			}
 		}

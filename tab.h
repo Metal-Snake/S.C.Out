@@ -1,7 +1,7 @@
-#define DIMX	40 //dimension d'un tableau (en cases)
+#define DIMX	40 //dimension of a table (in boxes)
 #define DIMY	24
 
-#define TRAIL	5 //temps entre un deplacement d'une case a l'autre du vert (inutile)
+#define TRAIL	5 //time between a displacement of a box to another green (useless)
 
 //sens possibles
 enum
@@ -14,8 +14,8 @@ enum
 
 struct InfoAnim
 {
-	Uint16 n; //numero de l'animation
-	Uint32 t; //temps
+	Uint16 n; //number of animations
+	Uint32 t; //time
 	
 	void init ();
 };
@@ -30,23 +30,23 @@ struct Tab
 {
 	Uint8 sol[DIMX][DIMY];
 	Uint16 t[DIMX][DIMY];
-	InfoAnim a[DIMX][DIMY]; //utilise pour les animations (compte le temps)
-	Uint16	posx; //notre position
+	InfoAnim a[DIMX][DIMY]; //used for animations (after time)
+	Uint16	posx; //our position
 	Uint16	posy;
-	Uint16	sx; //position ou on reapparait
+	Uint16	sx; //respawn position
 	Uint16	sy;
 	Uint16	so; //objet que l'on a quand on réapparait
-	Uint8	sens; //notre sens
-	Uint8	tsens; //notre sens de tir
+	Uint8	sens; //our direction
+	Uint8	tsens; //our direction of shooting
 	Uint16	objet;
 	
-	void Load (FILE *f); //charge le tableau du fichier f
-	void Save (FILE *f); //enregistre le tableau dans le fichier f
-	void Load (Uint8 n); //charge le tableau numero n
-	void Save (Uint8 n); //enregistre le tableau numero n
-	void Load (const char *file); //charge le tableau file
-	void Save (const char *file); //enregistre le tableau file
-	void Default (); //tableau vide par defaut
+	void Load (FILE *f); //load picture from file
+	void Save (FILE *f); //save picture to file 
+	void Load (Uint8 n); //load picture n
+	void Save (Uint8 n); //save picture n
+	void Load (const char *file); //load picture from file
+	void Save (const char *file); //save picture to file
+	void Default (); //default picture (empty)
 };
 
 struct Pos

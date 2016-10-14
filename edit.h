@@ -1,20 +1,20 @@
 
-#define EX	40	//nombre d'images en abscisse
-#define EY	8	//nombre d'images en ordonnée
+#define EX	40	//number of horizontal images
+#define EY	8	//number of vertical images
 
 struct Edit
 {
 	Uint16 t[EX][EY];
-	Uint16 sel; //ce qui est selectionne
+	Uint16 sel; //select what is
 	
-	void Load (); //charge la liste des images de l'editeur
-	void Draw (SDL_Surface *im, SDL_Surface *ecran); //affiche les images de l'editeur
-	void Draw (SDL_Surface *im, SDL_Surface *ecran, Uint16 x, Uint16 y); //affiche les images de l'editeur
-	void Select (Uint16 x, Uint16 y); //selectionne
+	void Load (); //load the list of images to the editor
+	void Draw (SDL_Surface *im, SDL_Surface *ecran); //display images from the editor
+	void Draw (SDL_Surface *im, SDL_Surface *ecran, Uint16 x, Uint16 y); //display images from the editor
+	void Select (Uint16 x, Uint16 y); //selection
 };
 typedef struct Edit Edit;
 
-void Edit::Select (Uint16 x, Uint16 y) //selectionne
+void Edit::Select (Uint16 x, Uint16 y) //selection
 {
 	if (x < EX && y < EY)
 	{
@@ -34,7 +34,7 @@ void Edit::Load ()
 		const char *ptr = tamp;
 		for (y=0;y<EY;y++)
 		{
-			//printf("lecture de la ligne %d...\n",y);
+			//printf("reading line %d...\n",y);
 			if (!readline(f, tamp, 256))
 			{
 				break;
@@ -46,7 +46,7 @@ void Edit::Load ()
 				ptr = findnum (ptr, &t[x][y]);
 				if (!ptr && x!=DIMX-1)
 				{
-					printf("Attention : ligne %d incomplete (%d/%d) !\n",y,x,DIMX);
+					printf("Attention : line %d incomplete (%d/%d) !\n",y,x,DIMX);
 				}
 			}
 		}
@@ -54,7 +54,7 @@ void Edit::Load ()
 		fclose(f);
 	}else
 	{
-		fprintf(stderr,"Le fichier de l'editeur est impossible a ouvrir !!!\n");
+		fprintf(stderr,"Editor file can't be opened !!!\n");
 	}
 }
 

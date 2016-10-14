@@ -1,5 +1,5 @@
 
-//masques pour le type
+//Masks for the types
 enum
 {
 	mur = 1<<0,
@@ -10,8 +10,8 @@ enum
 	react_on = 1<<5,
 	missile = 1<<6,
 	stop_ball = 1<<7,
-	porte = 1<<8, //sens unic
-	porte_ouverte = 1<<9, //sens unic ouvert
+	porte = 1<<8, //one way door (sens unic)
+	porte_ouverte = 1<<9, //one way door open (sens unic ouvert)
 	onda_mania = 1<<10,
 	rail = 1<<11,
 	rail_actif = 1<<12,
@@ -35,7 +35,7 @@ enum
 
 struct Regles
 {
-	Uint32 type; //type d'objet
+	Uint32 type; //type of object
 	
 	void init ();
 	inline bool is (Uint32 type2);
@@ -126,7 +126,7 @@ void LoadRegles (Regles *r)
 	FILE *f = fopen(tamp,"r");
 	if (!f)
 	{
-		fprintf(stderr, "Impossible de charger les regles !!!\n");
+		fprintf(stderr, "Unable to load rules !!!\n");
 		return;
 	}
 	
@@ -137,35 +137,35 @@ void LoadRegles (Regles *r)
 		
 	for (i=0;;i++)
 	{
-		//printf("Lecture de la ligne %d : ",i);
+		//printf("Reading line %d : ",i);
 		if (!readline(f, tamp, 256))
 			break;
 		//printf(tamp);
 		//printf("\n");
 		ptr = tamp;
-		if (ptr = findword(tamp, word, 256)) //cherche s'il y a une nouvelle definition
-		{ //debut d'une nouvelle definition
-			//printf(" mot trouve : %s , reste : %s\n",word,ptr);
+		if (ptr = findword(tamp, word, 256)) //looking if new defintion
+		{ //beginning of a new definition
+			//printf(" word is : %s , remaining : %s\n",word,ptr);
 			if (!(def = getdefnum (word)))
 			{
-				fprintf(stderr, "Le type %s est inconnu !\n",word);
+				fprintf(stderr, "Type %s is unknown !\n",word);
 			}
 		}else
 			ptr = tamp;
 		if (def)
 		{
-			for(;;) //cherche tous les nombres de la definition
+			for(;;) //seeks all definitions
 			{
 				ptr = findnum (ptr, &n);
 				if (!ptr)
 					break;
-				//printf("nombre trouve : %d\n",n);
-				//ajoute cette nouvelle caracteristique de l'objet n
+				//printf("number is : %d\n",n);
+				//This new feature adds the object n
 				if (n < NI)
 					r[n].type |= def;
 				else
 				{
-					fprintf(stderr, "Erreur : definition portant sur l'objet %d n'existant pas !!!\n",n);
+					fprintf(stderr, "Error : Definition of the object %d doesn't exist !!!\n",n);
 				}
 			}
 		}
