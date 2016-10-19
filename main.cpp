@@ -7,13 +7,9 @@
 //
 
 #define MAC	true
-
 #define TTF	true
-
 #define HSON	true
-
 #define NI	420 //number of images in the game (number of objects)
-
 #define EDIT	false
 
 #include <fcntl.h>
@@ -21,45 +17,46 @@
 #include <unistd.h>
 
 #if MAC
-const char *RESOURCES = ""; //resource folder in Mac apps
-const char *SOUNDS_DIRECTORY = "Sounds/"; //sounds folder
-const char *TAB = "Tableaux/"; //tables folder
-#import <Cocoa/Cocoa.h>
-#import <SDL/SDL.h>
-#if TTF
-#import <SDL_ttf/SDL_ttf.h>
-#endif
+	const char *RESOURCES = ""; //resource folder in Mac apps
+	const char *SOUNDS_DIRECTORY = "Sounds/"; //sounds folder
+	const char *TAB = "Tableaux/"; //tables folder
+	#import <Cocoa/Cocoa.h>
+	#import <SDL/SDL.h>
+	#if TTF
+		#import <SDL_ttf/SDL_ttf.h>
+	#endif
 #else
-const char *RESOURCES = ""; //resource folder
-const char *SOUNDS_DIRECTORY = "Sounds/"; //sounds folder
-const char *TAB = "Tableaux/"; //tables folder
-#include <SDL/SDL.h>
-#if TTF
-#include <SDL/SDL_ttf.h>
+	const char *RESOURCES = ""; //resource folder
+	const char *SOUNDS_DIRECTORY = "Sounds/"; //sounds folder
+	const char *TAB = "Tableaux/"; //tables folder
+	#include <SDL/SDL.h>
+	#if TTF
+		#include <SDL/SDL_ttf.h>
+	#endif
 #endif
-#endif
+
 #include "read.h"
 #include "sound.h"
 #include "tab.h"
 #include "rules.h"
 #include "anims.h"
 
-#define FINAL	true
+#define FINAL	false
 #define CHEATED	false
 bool ROUGE = true;
 
 #if FINAL && !EDIT
-#define SCREENX 640 //1280 //640 //window dimensions
-#define SCREENY	480 //800 //480
+	#define SCREENX 640 //1280 //640 //window dimensions
+	#define SCREENY	480 //800 //480
 
-#define NX	14 //40 //10 //10 //number of visible boxes
-#define NY	10 //24 //8 //8
+	#define NX	14 //40 //10 //10 //number of visible boxes
+	#define NY	10 //24 //8 //8
 #else
-#define SCREENX 1280 //640 //window dimensions
-#define SCREENY	800 //480
+	#define SCREENX 1280 //640 //window dimensions
+	#define SCREENY	800 //480
 
-#define NX	40 //10 //10 //number of visible boxes
-#define NY	24 //8 //8
+	#define NX	40 //10 //10 //number of visible boxes
+	#define NY	24 //8 //8
 #endif
 
 #define CX	32 //box size in pixels
@@ -73,18 +70,19 @@ bool ROUGE = true;
 #define TANIM	30 //minimum time between two frame animations (in milliseconds)
 
 #if FINAL
-#define TVUE	20 //time between displacements of sight?? (temps entre deux deplacements de la vue)
-#define NVUE	10 //field of view picture number?? (nombre d'image d'un deplacement du champ de vision)
-#define NMUS0	5	//number of images of a displacement?? (nombre d'images d'un deplacement de nous)
-Uint32 NMUS	 = NMUS0;	//field of view picture number?? (nombre d'image d'un deplacement du champ de vision)
-#define TMUS	30	//time between two images of displacement?? (temps entre deux images d'un deplacement de nous)
+	#define TVUE	20 //time between displacements of sight?? (temps entre deux deplacements de la vue)
+	#define NVUE	10 //field of view picture number?? (nombre d'image d'un deplacement du champ de vision)
+	#define NMUS0	5	//number of images of a displacement?? (nombre d'images d'un deplacement de nous)
+	Uint32 NMUS	 = NMUS0;	//field of view picture number?? (nombre d'image d'un deplacement du champ de vision)
+	#define TMUS	30	//time between two images of displacement?? (temps entre deux images d'un deplacement de nous)
 #else
-#define TVUE	5 //time between displacement of sight (temps entre deux deplacements de la vue)
-#define NVUE	24 //field of view picture number?? (nombre d'image d'un deplacement du champ de vision)
-#define NMUS0	5	//number of images of a displacement?? (nombre d'images d'un deplacement de nous)
-Uint32 NMUS	 = NMUS0;	//field of view picture number?? (nombre d'image d'un deplacement du champ de vision)
-#define TMUS	20	//time between two images of displacement?? (temps entre deux images d'un deplacement de nous)
+	#define TVUE	5 //time between displacement of sight (temps entre deux deplacements de la vue)
+	#define NVUE	24 //field of view picture number?? (nombre d'image d'un deplacement du champ de vision)
+	#define NMUS0	5	//number of images of a displacement?? (nombre d'images d'un deplacement de nous)
+	Uint32 NMUS	 = NMUS0;	//field of view picture number?? (nombre d'image d'un deplacement du champ de vision)
+	#define TMUS	20	//time between two images of displacement?? (temps entre deux images d'un deplacement de nous)
 #endif
+
 #define tNMUS0	10 //remaining before the end of the acceleration (in many cases) time?? (temps restant avant fin de l'acceleration (en nombre de cases))
 Uint32 tNMUS = 0; //time remaining before the end of the acceleration (temps restant avant fin de l'acceleration)
 
@@ -162,7 +160,7 @@ enum
 
 struct Game
 {
-	Sounds s; //sound management
+	Sounds sounds; //sound management
 	Tab t; //current table (table = level?)
 	Pos pr; //our position in pixels, relative to the case (case == frame?)
 	Regles r[NI]; //rules of each object
@@ -232,7 +230,7 @@ struct Game
 	void Main (); //page de depart
 	int EntreCode ();
 	void EditKeys (); //control settings
-	void EditSon (); //sound setting
+	void EditSound (); //sound setting
 	void EditGraph (); //graphic settings
 	void EditParams (); //game settings
 	void ChooseTab (Uint16 *niveau); //level select
@@ -462,7 +460,7 @@ void FadeOut (SDL_Surface *s, SDL_Surface *ecran)
 int GetNiveau (const char *txt)
 {
 	char tamp[256];
-	MakeName("codes.txt", tamp);
+	MakeName("codes.txt", tamp, RESOURCES, 256);
 	FILE *f = fopen(tamp, "r");
 	int niveau = -1;
 	Uint16 k;
@@ -511,7 +509,7 @@ int GetNiveau (const char *txt)
 bool GetNiveau (int niveau, char *txt)
 {
 	char tamp[256];
-	MakeName("codes.txt", tamp);
+	MakeName("codes.txt", tamp, RESOURCES, 256);
 	FILE *f = fopen(tamp, "r");	
 	Uint16 k;
 	int i;
@@ -588,7 +586,7 @@ int Game::EntreCode ()
 					case SDLK_BACKSPACE:
 						if (pos)
 						{
-							s.Play(16); //bomb explosion
+							sounds.Play(16); //bomb explosion
 							pos--;
 							tamp[pos] = 0;
 							update = true;
@@ -598,7 +596,7 @@ int Game::EntreCode ()
 						niveau = GetNiveau(tamp);
 						if (niveau != -1)
 						{
-							s.Play(4);
+							sounds.Play(4);
 							cont = false;
 						}else
 						{
@@ -611,7 +609,7 @@ int Game::EntreCode ()
 				{
 					if (pos < 254)
 					{
-						s.Play(13);
+						sounds.Play(13);
 						tamp[pos] = c;
 						pos++;
 						tamp[pos] = 0;
@@ -669,7 +667,7 @@ void DrawTxt (const char *texte, Uint16 x, Uint16 y, SDL_Surface *ecran)
 }
 */
 
-void Game::EditSon ()
+void Game::EditSound ()
 {
 	SDL_Rect dest;
 	char tamp[255];
@@ -717,7 +715,7 @@ void Game::EditSon ()
 						break;
 					case SDLK_F1:
 						SOUND = !SOUND;
-						s.Play(4);
+						sounds.Play(4);
 						cont = false;
 						break;
 				}
@@ -774,7 +772,7 @@ void Game::EditGraph ()
 						break;
 					case SDLK_F1:
 						ROUGE = !ROUGE;
-						s.Play(4);
+						sounds.Play(4);
 						cont = false;
 						break;
 				}
@@ -871,7 +869,7 @@ void Game::EditKeys () //allows the user to change the control keys
 						break;
 				}
 				key[touche] = event.key.keysym.sym;
-				s.Play(4); //serrure
+				sounds.Play(4); //serrure
 				c++;
 				if (c > 7)
 					return;
@@ -949,7 +947,7 @@ void Game::EditParams ()
 						update = true;
 						break;
 					case SDLK_F2:
-						EditSon();
+						EditSound();
 						update = true;
 						break;
 					case SDLK_F3:
@@ -1008,7 +1006,7 @@ void Game::Main ()
 {
 	//affichage de l'image de Kalisto
 	char tamp[256];
-	MakeName("Kalisto.bmp", tamp);
+	MakeName("Kalisto.bmp", tamp, RESOURCES, 256);
 	SDL_Surface *s = SDL_LoadBMP (tamp);
 	//SDL_Surface *sf = SDL_CreateRGBSurface(SDL_HWSURFACE, s->w, s->h, 32, 0, 0, 0, 0); //fond
 	if (!s)
@@ -1043,7 +1041,7 @@ void Game::Main ()
 	SDL_FreeSurface(s);
 	
 	//affichage de l'ecran de depart
-	MakeName("S.C.OUT.bmp",tamp);
+	MakeName("S.C.OUT.bmp",tamp, RESOURCES, 256);
 	s = SDL_LoadBMP (tamp);
 	SDL_Color blanc = {255, 200, 100};
 #if TTF
@@ -1697,7 +1695,7 @@ void Game::Teleporte (Uint16 w)
 				Draw(t.posx, t.posy);
 				t.posx = x;
 				t.posy = y;
-				s.Play(10);
+				sounds.Play(10);
 				SDL_Rect nvue;
 				Pos p = GoodVue();
 				nvue.x = p.x;
@@ -1705,7 +1703,7 @@ void Game::Teleporte (Uint16 w)
 				nvue.w = vue.w;
 				nvue.h = vue.h;
 				MoveVueTo(nvue);
-				s.Play (12);
+				sounds.Play (12);
 				DrawUs();
 				return;
 			}
@@ -1799,25 +1797,25 @@ void Game::ReactOn (Uint16 x, Uint16 y)
 			dy = 1;
 		if (c == 315)
 			dy = -1;
-		s.Play(5);
+		sounds.Play(5);
 		//printf("Lancement d'une balle en (%d,%d), vers (%d,%d)..\n",x,y,dx,dy);
 		Bullet(x, y, dx, dy); //throws a ball from (x, y) in the direction (dx, dy)
 	}
 	if (c == 310) //vue
 	{
-		s.Play(15);
+		sounds.Play(15);
 		Vue ();
 	}
 	if (c == 307) //accelerator
 	{
 		tNMUS = tNMUS0;
 		NMUS = NMUS0/2;
-		s.Play(1);
+		sounds.Play(1);
 		t.t[x][y] = 0;
 	}
 	if (c == 281) //invincibility
 	{
-		s.Play(1);
+		sounds.Play(1);
 		t.t[x][y] = 0;
 		invincible = INVINCIBLE;
 	}
@@ -1898,7 +1896,7 @@ void Game::DoBullet (Uint16 x, Uint16 y) //bullet or explosion (x,y)
 		t.a[x][y].t++;
 		if (t.a[x][y].t >= 10)
 		{
-			s.Play(16);
+			sounds.Play(16);
 			Anime(x, y, 28);
 		}
 	}
@@ -1921,7 +1919,7 @@ void Game::DoBullet (Uint16 x, Uint16 y) //bullet or explosion (x,y)
 				Anime(x+dx, y+dy, 28); //explosion
 			}
 		}
-		s.Play(6);
+		sounds.Play(6);
 		Anime(x, y, 28); //explosion
 	}
 	if (c == 285 || c == 295 || c == 305 || c == 315) //shooter
@@ -1935,13 +1933,13 @@ void Game::DoBullet (Uint16 x, Uint16 y) //bullet or explosion (x,y)
 			dy = 1;
 		if (c == 315)
 			dy = -1;
-		s.Play(5);
+		sounds.Play(5);
 		//printf("Lancement d'une balle en (%d,%d), vers (%d,%d)..\n",x,y,dx,dy);
 		Bullet(x, y, dx, dy); //throws a ball from (x, y) in the direction (dx, dy)
 	}
 	if (c == 287) //shooter down special
 	{
-		s.Play(5);
+		sounds.Play(5);
 		Bullet(x, y, 0, 1);
 	}
 	if (r[t.t[x][y]].is(explosif)) //explosive
@@ -2025,18 +2023,18 @@ void Game::DoBullet (Uint16 x, Uint16 y) //bullet or explosion (x,y)
 	}
 	if (r[t.t[x][y]].is(plante)) //plant
 	{
-		s.Play(16);
+		sounds.Play(16);
 		Anime(x, y, 28); //explosion
 	}
 	if (r[t.t[x][y]].is(rond_colore)) //round color
 	{
-		s.Play(16);
+		sounds.Play(16);
 		Anime(x, y, 28); //explosion
 		OpenDoors(t.t[x][y]);
 	}
 	if (t.t[x][y] == 234) //multi-missiles
 	{
-		s.Play(16);
+		sounds.Play(16);
 		Anime(x, y, 28); //explosion
 		if (x+1 < DIMX)
 		{
@@ -2085,7 +2083,7 @@ void Game::DoGrenade (Uint16 x, Uint16 y)
 {
 	if ((x-t.posx)*(x-t.posx) + (y-t.posy)*(y-t.posy) < DHEAR2)
 	{
-		s.Play(20);
+		sounds.Play(20);
 	}
 	int dx,dy;
 	t.t[x][y] = 224; //hole
@@ -2124,7 +2122,7 @@ void Game::DoExplosive (Uint16 x, Uint16 y) //Start an explosive located at (x, 
 	//printf("Lancement d'un explosif en (%d,%d)...\n",x,y);
 	if ((x-t.posx)*(x-t.posx) + (y-t.posy)*(y-t.posy) < DHEAR2)
 	{
-		s.Play(16); //plays the sound
+		sounds.Play(16); //plays the sound
 	}
 	int dx,dy;
 	Anime(x , y, 33); //center of explosion
@@ -2377,35 +2375,35 @@ int DoBullets (void *data)
 								break;
 							case 301: //multiple shooter
 								j->b[i].used = false;
-								//j->s.Play(5);
+								//j->sounds.Play(5);
 								j->Bullet(x, y, 1, 0);
 								j->Bullet(x, y, -1, 0);
 								j->Bullet(x, y, 0, 1);
 								j->Bullet(x, y, 0, -1);
 								break;
 							case 285: //cannon left
-								j->s.Play(5);
+								j->sounds.Play(5);
 								j->Bullet(x, y, -1, 0);
 								break;
 							case 295: //cannon right
-								j->s.Play(5);
+								j->sounds.Play(5);
 								j->Bullet(x, y, 1, 0);
 								break;
 							case 305: //cannon bottom
-								j->s.Play(5);
+								j->sounds.Play(5);
 								j->Bullet(x, y, 0, 1);
 								break;
 							case 315: //cannon top
-								j->s.Play(5);
+								j->sounds.Play(5);
 								j->Bullet(x, y, 0, -1);
 								break;
 							case 287: //cannon bottom special
-								j->s.Play(5);
+								j->sounds.Play(5);
 								j->Bullet(x, y, 0, 1);
 								j->b[i].used = false;
 								break;
 							case 280: //green diagonal shooter (shooting in all directions)
-								j->s.Play(5);
+								j->sounds.Play(5);
 								j->Bullet(x, y, -1, -1);
 								j->Bullet(x, y, -1, 1);
 								j->Bullet(x, y, 1, -1);
@@ -2876,7 +2874,7 @@ int DoAnim (void *data)
 						{
 							j->moveus = true;
 							j->t.sens = down;
-							j->s.Play(21); //pulse
+							j->sounds.Play(21); //pulse
 						}
 						 */
 						if (n == 32) //rail gets deactivated
@@ -2907,7 +2905,7 @@ int DoAnim (void *data)
 									{
 										j->moveus = true;
 										j->t.sens = down;
-										j->s.Play(21); //pulse
+										j->sounds.Play(21); //pulse
 									}
 									j->Anime(x+p.x, y+p.y, 32); //rail vert qui s'eteint
 								}
@@ -3007,7 +3005,7 @@ void Game::Anime (Uint16 x, Uint16 y, Uint16 n) //start the animation n (x,y)
 	{
 		//verifies that it is not too far away to hear
 		if ((x-t.posx)*(x-t.posx) + (y-t.posy)*(y-t.posy) < DHEAR2)
-			s.Play(a[n].s); //plays the sound
+			sounds.Play(a[n].s); //plays the sound
 	}
 	if (t.a[x][y].n != 27)
 	{
@@ -3192,7 +3190,7 @@ void Game::init ()
 		exit(EXIT_FAILURE);
 	}
 	//printf("Loading the police...\n");
-	MakeName("arial.ttf", tamp);
+	MakeName("arial.ttf", tamp, RESOURCES, 256);
 	police = TTF_OpenFont(tamp, 20);
 	if (!police)
 	{
@@ -3209,10 +3207,10 @@ void Game::init ()
     }
 #if HSON
 	//initialize sound
-	s.Init();
+	sounds.Init();
 #endif
 	//Loads game images
-	MakeName("images.bmp", tamp);
+	MakeName("images.bmp", tamp, RESOURCES, 256);
 	im = SDL_LoadBMP(tamp);
 	if (!im)
 	{
@@ -3278,7 +3276,7 @@ void Game::end ()
 	//frees images of the game
 	SDL_FreeSurface(im);
 	//stop sound
-	s.Stop();
+	sounds.Stop();
 #if TTF
 	//close ttf
 	TTF_CloseFont(police);
@@ -3424,7 +3422,7 @@ void Game::MoveUs (Uint8 sens)
 	}
 	//update the field of view
 	UpdateVue(t.posx+dx, t.posy+dy);
-	s.Play(2); //son du deplacement
+	sounds.Play(2); //son du deplacement
 	Draw(t.posx, t.posy); //on clear? (on s'efface)
 	//movement animation
 	int i;
@@ -3579,7 +3577,7 @@ void Game::MoveUs (Uint8 sens)
 	{
 		if (canmove)
 			sens = t.sens;
-		s.Play(9);
+		sounds.Play(9);
 		MoveUs(sens);
 		return;
 	}
@@ -3923,7 +3921,7 @@ void Game::Play (Uint32 niveau)
 								dy = 1;
 							if (t.objet == 63)
 								dy = -1;
-							s.Play(3);
+							sounds.Play(3);
 							Bullet(t.posx, t.posy, dx, dy);
 							t.objet = 0;
 							OpenBarriere();
@@ -3948,7 +3946,7 @@ void Game::Play (Uint32 niveau)
 							}
 							Update_tsens ();
 							DrawUs();
-							s.Play(13);
+							sounds.Play(13);
 						}else
 						{
 							if (!t.t[t.posx][t.posy])
@@ -3959,7 +3957,7 @@ void Game::Play (Uint32 niveau)
 									t.objet = 0;
 									Update_tsens ();
 									DrawUs();
-									s.Play(13);
+									sounds.Play(13);
 									OpenBarriere();
 								}
 							}else
@@ -3972,7 +3970,7 @@ void Game::Play (Uint32 niveau)
 								}
 								if (r[t.t[t.posx][t.posy]].is(rail) && t.objet == 163) //rail && pile
 								{
-									s.Play(21);
+									sounds.Play(21);
 									ActiveRail(t.posx, t.posy);
 									t.objet = 0;
 									//moveus = true;
@@ -4017,7 +4015,7 @@ void Game::Play (Uint32 niveau)
 			printf("You died !\n");
 			printf("pause 2 sec...\n");
 			pause(2000);
-			s.Play(23);
+			sounds.Play(23);
 			printf("pause 3 sec...\n");
 			pause(3000);
 			break;
@@ -4025,7 +4023,7 @@ void Game::Play (Uint32 niveau)
 			printf("You won !\n");
 			printf("pause 2 sec...\n");
 			pause(2000);
-			s.Play(22);
+			sounds.Play(22);
 			printf("pause 3 sec...\n");
 			pause(3000);
 			break;
@@ -4042,7 +4040,7 @@ void Game::Play (Uint32 niveau)
 	{
 		t.sx = t.sy = 0; //resets place of occurrence
 	}
-	printf("fin de Play !\n");
+	printf("Game::Play end !\n");
 }
 
 int main(int argc, char *argv[])

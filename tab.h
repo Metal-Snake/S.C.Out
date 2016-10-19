@@ -57,6 +57,7 @@ struct Pos
 
 void Tab::Default ()
 {
+	printf("Tab::Default\n");
 	int x,y;
 	for (y=0;y<DIMY;y++)
 	{
@@ -88,6 +89,7 @@ void Tab::Default ()
 
 void Tab::Load (FILE *f)
 {
+	printf("Tab::Load File\n");
 	//initialise les sens
 	sens = 1;
 	tsens = 1;
@@ -144,6 +146,7 @@ void Tab::Load (FILE *f)
 
 void Tab::Save (FILE *f)
 {
+	printf("Tab::Save File\n");
 	int x,y;
 	for (y=0;y<DIMY;y++)
 	{
@@ -171,13 +174,14 @@ void Tab::Save (FILE *f)
 
 void Tab::Load (Uint8 n) //charge le tableau numero n
 {
+	printf("Tab::Load Uint8 %d\n", n);
 	char tamp[256];
 #if EDIT
 	char txt[40];
 	sprintf(txt,"tableau%d",n);
 	Load(txt);
 #else
-	MakeName("LEVEL.DAT", tamp);
+	MakeName("LEVEL.DAT", tamp, RESOURCES, 256);
 	FILE *f = fopen(tamp,"r");
 	if (!f)
 	{
@@ -202,13 +206,14 @@ void Tab::Load (Uint8 n) //charge le tableau numero n
 
 void Tab::Save (Uint8 n) //charge le tableau numero n
 {
+	printf("Tab::Save Uint8 %d\n", n);
 	char tamp[256];
 #if EDIT
 	char txt[40];
 	sprintf(txt,"tableau%d",n);
 	Save(txt);
 #else
-	MakeName("LEVEL.DAT", tamp);
+	MakeName("LEVEL.DAT", tamp, RESOURCES, 256);
 	FILE *f = fopen(tamp,"r+");
 	if (!f)
 	{
@@ -233,9 +238,10 @@ void Tab::Save (Uint8 n) //charge le tableau numero n
 
 void Tab::Load (const char *file)
 {
+	printf("Tab::Load constChar File\n");
 	Default();
 	char tamp[256];
-	MakeNameTAB(file, tamp);
+	MakeName(file, tamp, TAB, 256);
 	FILE *f = fopen(tamp,"r");
 	if (!f)
 	{
@@ -248,8 +254,9 @@ void Tab::Load (const char *file)
 
 void Tab::Save (const char *file)
 {
+	printf("Tab::Save constChar File\n");
 	char tamp[256];
-	MakeNameTAB(file, tamp);
+	MakeName(file, tamp, TAB, 256);
 	FILE *f = fopen(tamp,"w");
 	if (!f)
 	{

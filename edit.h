@@ -25,7 +25,7 @@ void Edit::Select (Uint16 x, Uint16 y) //selection
 void Edit::Load ()
 {
 	char tamp[256];
-	MakeName("edit.txt", tamp);
+	MakeName("edit.txt", tamp, RESOURCES, 256);
 	FILE *f = fopen(tamp,"r");
 	if (f)
 	{

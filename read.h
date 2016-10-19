@@ -1,45 +1,10 @@
-void MakeName (const char *txt, char *res)
+void MakeName (const char *txt, char *res, const char *path, Uint16 bufLength)
 {
-	Uint16 i;
-	for (i=0;i<strlen(RESOURCES);i++)
-	{
-		res[i] = RESOURCES[i];
-	}
-	for (i=strlen(RESOURCES);i<=strlen(RESOURCES)+strlen(txt);i++)
-	{
-		res[i] = txt[i-strlen(RESOURCES)];
-	}
-	//printf("Nom obtenu : %s + %s = %s\n",RESOURCES, txt, res);
+	strlcpy(res, path, bufLength);
+	strlcat(res, txt, bufLength);
 }
 
-void MakeNameS (const char *txt, char *res)
-{
-	Uint16 i;
-	for (i=0;i<strlen(SOUNDS_DIRECTORY);i++)
-	{
-		res[i] = SOUNDS_DIRECTORY[i];
-	}
-	for (i=strlen(SOUNDS_DIRECTORY);i<=strlen(SOUNDS_DIRECTORY)+strlen(txt);i++)
-	{
-		res[i] = txt[i-strlen(SOUNDS_DIRECTORY)];
-	}
-	//printf("Nom obtenu : %s + %s = %s\n",RESOURCES, txt, res);
-}
 
-void MakeNameTAB (const char *txt, char *res)
-{
-	printf("MakeNameTAB %s %s", txt, res);
-	Uint16 i;
-	for (i=0;i<strlen(TAB);i++)
-	{
-		res[i] = TAB[i];
-	}
-	for (i=strlen(TAB);i<=strlen(TAB)+strlen(txt);i++)
-	{
-		res[i] = txt[i-strlen(TAB)];
-	}
-	//printf("Nom obtenu : %s + %s = %s\n",RESOURCES, txt, res);
-}
 
 bool Read (Uint16 *n, FILE *f)
 {

@@ -29,7 +29,7 @@ void LoadAnims (Anim *a)
 		a[i].init();
 	}
 	char tamp[256];
-	MakeName("anims.txt", tamp);
+	MakeName("anims.txt", tamp, RESOURCES, 256);
 	FILE *f = fopen(tamp,"r");
 	if (!f)
 	{

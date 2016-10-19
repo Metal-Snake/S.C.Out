@@ -79,12 +79,11 @@ Sound LoadSound (const char *file)
 	return s;
 }
 
-struct RefSound
+typedef struct 
 {
 	Uint8 *ptr; //la ou on en est (NULL si son pas lu)
 	Uint32 i; //sound index
-};
-typedef struct RefSound RefSound;
+}RefSound;
 
 void mixaudio(void *unused, Uint8 *stream, int len);
 
@@ -118,12 +117,12 @@ void Sounds::Load ()
 	int i;
 	char file[256];
 	char tamp[256];
-	MakeNameS("son00.wav", file);
+	MakeName("son00.wav", file, SOUNDS_DIRECTORY, 256);
 	for (i=1;i<NSONSM;i++)
 	{
 		file[strlen(SOUNDS_DIRECTORY)+3] = '0'+i/10;
 		file[strlen(SOUNDS_DIRECTORY)+4] = '0'+i%10;
-		MakeName(file, tamp);
+		MakeName(file, tamp, RESOURCES, 256);
 		Load(tamp, i);
 	}
 }

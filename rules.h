@@ -123,7 +123,7 @@ void LoadRegles (Regles *r)
 		r[i].init();
 	}
 	char tamp[256];
-	MakeName("rules.txt", tamp);
+	MakeName("rules.txt", tamp, RESOURCES, 256);
 	FILE *f = fopen(tamp,"r");
 	if (!f)
 	{
